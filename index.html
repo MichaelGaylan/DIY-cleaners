@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DIY Cleaning — safe homemade cleaners</title>
+<meta name="description" content="44 safe, low-waste homemade cleaning recipes with a never-mix safety guide.">
+<meta name="theme-color" content="#0f3d34">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f4f8f6;--card:#fff;--ink:#16302a;--muted:#5b7069;--line:#dde7e3;--brand:#0f7a5f;--brand-dk:#0f3d34;--ok:#0f7a5f;--warn:#a86400;--bad:#b3261e;--chip:#e8f2ee;--r:14px}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1714;--card:#15221e;--ink:#e6f0ec;--muted:#93a8a0;--line:#25362f;--brand:#3cc79f;--brand-dk:#0b2a23;--ok:#3cc79f;--warn:#f2b45a;--bad:#ff8a80;--chip:#1d2e28}}
+*{box-sizing:border-box}html,body{margin:0}
+body{font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+header{background:var(--brand-dk);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 14px}
+header h1{margin:0;font-size:1.25rem}header p{margin:2px 0 0;opacity:.8;font-size:.85rem}
+main{max-width:760px;margin:0 auto;padding:12px 14px}
+.search{width:100%;padding:12px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 12px;font:inherit;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin:10px 0}
+.rc{display:flex;gap:12px;align-items:center;cursor:pointer;width:100%;text-align:left;font:inherit;color:inherit}
+.rc .emo{font-size:1.6rem;width:44px;height:44px;display:grid;place-items:center;background:var(--chip);border-radius:12px;flex:none}
+.rc .t{flex:1;min-width:0}.rc b{display:block}.muted{color:var(--muted)}.small{font-size:.85rem}
+.badge{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid currentColor;margin:4px 6px 0 0}
+.g-disinfects{color:var(--ok)}.g-sanitizes{color:var(--warn)}.g-cleans{color:var(--muted)}
+h2{font-size:1.05rem;margin:20px 0 6px}
+ol,ul{padding-left:22px;margin:6px 0}li{margin:4px 0}
+.note{border-radius:var(--r);padding:12px 14px;margin:12px 0;background:rgba(168,100,0,.08);border:1px solid rgba(168,100,0,.35)}
+.danger{background:rgba(179,38,30,.07);border-color:rgba(179,38,30,.35)}
+.back{background:none;border:none;color:var(--brand);font:inherit;padding:6px 0;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit;cursor:pointer}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600}
+.mix{display:flex;gap:10px}.mix .x{font-size:1.3rem}
+.pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pantry label{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;cursor:pointer;font-size:.9rem}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:none;color:var(--muted);font:inherit;font-size:.75rem;padding:8px 0 10px;cursor:pointer}
+nav button span{display:block;font-size:1.3rem}nav button.on{color:var(--brand);font-weight:600}
+footer{text-align:center;color:var(--muted);font-size:.75rem;margin:24px 0 8px}
+a{color:var(--brand)}
+.fav{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--brand)}
+@media print{nav,header,.back,.noprint{display:none}body{padding:0}}
+</style>
+</head>
+<body>
+<header><h1>🧴 DIY Cleaning</h1><p>Safe, low-waste cleaners you mix at home</p></header>
+<main id="app"><p class="muted">Loading recipes…</p></main>
+<nav id="nav">
+ <button data-tab="recipes" class="on"><span>🧽</span>Recipes</button>
+ <button data-tab="pantry"><span>🧺</span>What can I make?</button>
+ <button data-tab="safety"><span>⚠️</span>Safety</button>
+ <button data-tab="saved"><span>♥</span>Saved</button>
+</nav>
+<script>
+/* Release info: bump VERSION per release and BUILD per published build */
+const VERSION="1.0.0",BUILD="2026.11.16-1";
+const GERM={disinfects:["🦠 Disinfects","Diluted bleach at CDC strength disinfects clean, hard surfaces kept wet at least 1 minute."],
+ sanitizes:["🧪 Sanitizes","Reduces many germs on a clean surface if left wet long enough, but it is not an EPA-registered disinfectant."],
+ cleans:["🧽 Cleans only","Lifts dirt and germs off but doesn't disinfect. When someone is sick, or for raw meat spills and diapers, use an EPA-registered disinfectant or the Bleach Disinfecting Solution."]};
+const FLAG={acid:"Acid: keep off marble, granite and other natural stone, and never use with bleach.",gloves:"Wear gloves.",flammable:"Flammable: keep away from flames and heat.",
+ peroxide:"Keep hydrogen peroxide in its brown bottle and never in the same bottle as vinegar.",bleach:"Bleach: ventilate, wear gloves, never mix with anything but water.",
+ eo:"Essential oils can be toxic to cats, dogs and birds; keep amounts small.",kids:"Harmful if swallowed: label it and store it out of reach of children.",pets:"Keep pets away while in use."};
+const PANTRY={vinegar:"White vinegar",bakingsoda:"Baking soda",washingsoda:"Washing soda",castile:"Liquid castile soap",dishsoap:"Dish soap",borax:"Borax",citric:"Citric acid",
+ peroxide:"3% hydrogen peroxide",alcohol:"Rubbing alcohol",bleach:"Unscented bleach",salt:"Coarse salt",cornstarch:"Cornstarch",citrus:"Lemons / oranges",oil:"Cooking oil",
+ eo:"Essential oils",acv:"Apple cider vinegar",aloe:"Aloe vera gel",barsoap:"Bar soap",de:"Diatomaceous earth"};
+const NEVERMIX=[["Bleach","Vinegar or any acid (lemon, citric acid, toilet bowl or rust cleaners)","Chlorine gas: coughing, chest pain, lung damage"],
+ ["Bleach","Ammonia (some glass cleaners, urine)","Chloramine gas: breathing damage, can be fatal"],["Bleach","Rubbing alcohol","Chloroform and other toxic compounds"],
+ ["Bleach","Hydrogen peroxide","Violent reaction, heat and splashing"],["Hydrogen peroxide","Vinegar, in one bottle","Peracetic acid, corrosive to skin, eyes and lungs"],
+ ["Baking soda","Vinegar, in a closed bottle","Pressure can burst the bottle; the mix mostly cancels out anyway"],["Drain cleaner","A different drain cleaner","Heat and splattering caustic: burns"],
+ ["Vinegar, lemon or citric acid","Natural stone","Etches marble, granite, travertine and limestone"]];
+const GERMTABLE=[["Vinegar sprays","Yes","Weakly, unreliable","No"],["Castile or dish soap","Yes","Removes germs, doesn't kill them","No"],["Baking soda, washing soda, borax","Yes","No","No"],
+ ["Essential oils","No","Unproven at safe amounts","No"],["3% hydrogen peroxide","Lightly","Many germs, 5 to 10 min wet time","No"],["70% rubbing alcohol","Lightly","Many germs, 30 s wet time","No"],
+ ["Diluted bleach","No","Yes, per CDC, after cleaning","Closest match"]];
+const SRC={cdc:["CDC: Cleaning and disinfecting with bleach","https://www.cdc.gov/hygiene/about/cleaning-and-disinfecting-with-bleach.html"],
+ epa:["EPA: Can I use household substances to kill germs?","https://www.epa.gov/coronavirus-and-disinfectants/can-i-use-common-household-substances-kill-novel-coronavirus"],
+ vt:["Virginia Tech Extension: Using hand sanitizers","https://pubs.ext.vt.edu/FST/FST-407/FST-407.html"]};
+const KEY="diy-cleaning-v1";let S={saved:[],have:[]};try{Object.assign(S,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+let D=null,tab="recipes",cat="all",q="",open=null;
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const catOf=id=>D.categories.find(c=>c.id===id);
+const badge=r=>GERM[r.germ]?`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`:"";
+const card=r=>`<div class="card"><button class="rc" data-open="${r.id}" style="background:none;border:none;padding:0"><div class="emo">${catOf(r.cat).emo}</div><div class="t"><b>${esc(r.name)}</b><span class="muted small">${r.id} · ${catOf(r.cat).name}</span><br>${badge(r)}</div><span class="muted">›</span></button></div>`;
+function list(){
+  const t=q.trim().toLowerCase();
+  const rs=D.recipes.filter(r=>(cat==="all"||r.cat===cat)&&(!t||[r.id,r.name,r.uses,...r.ing].join(" ").toLowerCase().includes(t)));
+  return `<input class="search" id="q" type="search" placeholder="Search: grease, rust, laundry, ants…" value="${esc(q)}" aria-label="Search recipes">
+  <div class="chips">${[{id:"all",name:"All",emo:"✨"},...D.categories].map(c=>`<button class="chip ${cat===c.id?"on":""}" data-cat="${c.id}">${c.emo} ${c.name}</button>`).join("")}</div>
+  <div class="note danger small"><b>Never mix cleaners.</b> Bleach plus vinegar or ammonia makes toxic gas. <a href="#" data-tab="safety">See the never-mix chart</a></div>
+  <div id="list">${rs.map(card).join("")||`<p class="muted">No recipes match “${esc(q)}”.</p>`}</div>`;
+}
+function detail(r){
+  const c=catOf(r.cat),fav=S.saved.includes(r.id),g=GERM[r.germ];
+  return `<button class="back" data-back>‹ Back</button>
+  <div class="card"><div class="rc"><div class="emo">${c.emo}</div><div class="t"><span class="muted small">${r.id} · ${c.name}</span><h1 style="margin:2px 0;font-size:1.25rem">${esc(r.name)}</h1>${badge(r)}</div>
+  <button class="fav noprint" data-fav="${r.id}" aria-label="${fav?"Remove from saved":"Save"}">${fav?"♥":"♡"}</button></div>
+  ${g?`<p class="small muted" style="margin:8px 0 0">${g[1]}</p>`:""}</div>
+  <h2>Ingredients</h2><ul>${r.ing.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+  <h2>Steps</h2><ol>${r.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+  <h2>Uses</h2><p>${esc(r.uses)}</p>
+  <h2>Storage & shelf life</h2><p>${esc(r.storage)}</p>
+  <div class="note"><b>⚠ Safety.</b> ${esc(r.safety)}${r.flags.length?" "+r.flags.map(f=>FLAG[f]).join(" "):""} <a href="#" data-tab="safety">Never-mix chart</a></div>
+  ${r.source?`<p class="small muted">Source: <a href="${SRC[r.source][1]}" target="_blank" rel="noopener">${SRC[r.source][0]}</a></p>`:""}
+  <div class="noprint" style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="window.print()">🖨 Print label</button></div>
+  <p class="small muted">Label every bottle with its name, ingredients and the date you made it. Spot-test surfaces and fabric first.</p>`;
+}
+function pantry(){
+  const have=new Set(S.have),ok=D.recipes.filter(r=>r.needs.every(n=>have.has(n))),near=D.recipes.filter(r=>!ok.includes(r)&&r.needs.filter(n=>!have.has(n)).length===1);
+  return `<h2 style="margin-top:6px">What do you have?</h2><p class="small muted">Tick what's in your cupboard. Water is always assumed.</p>
+  <div class="pantry">${Object.entries(PANTRY).map(([k,v])=>`<label><input type="checkbox" data-have="${k}" ${have.has(k)?"checked":""}> ${v}</label>`).join("")}</div>
+  <h2>You can make now <span class="muted small">· ${ok.length}</span></h2>${ok.map(card).join("")||`<p class="muted small">Tick a few ingredients to see recipes.</p>`}
+  ${near.length?`<h2>One ingredient away <span class="muted small">· ${near.length}</span></h2>`+near.map(r=>card(r).replace("</b>",`</b><span class="small" style="color:var(--warn)">Need: ${r.needs.filter(n=>!have.has(n)).map(n=>PANTRY[n]).join(", ")}</span><br>`)).join(""):""}`;
+}
+function safety(){
+  return `<h2 style="margin-top:6px">Never mix these</h2><p class="small muted">Use one cleaner at a time and rinse with water in between.</p>
+  ${NEVERMIX.map(([a,b,c])=>`<div class="card mix"><div class="x">🚫</div><div><b>${a} + ${b}</b><div class="small muted">${c}</div></div></div>`).join("")}
+  <h2>What really disinfects</h2>
+  <p class="small">Only diluted bleach matches CDC disinfecting guidance. The EPA doesn't test household ingredients like vinegar or rubbing alcohol, so none of these replace an EPA-registered disinfectant used as its label says. Always clean first: dirt shields germs.</p>
+  <div class="card" style="overflow-x:auto"><table><thead><tr><th>Mix</th><th>Cleans</th><th>Kills germs</th><th>Replaces a registered disinfectant?</th></tr></thead>
+  <tbody>${GERMTABLE.map(r=>`<tr>${r.map((c,i)=>`<td>${i?c:`<b>${c}</b>`}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+  <h2>Ground rules</h2><ul class="small">
+  <li>Ventilate: open a window or run a fan for bleach, vinegar and essential oils.</li>
+  <li>Wear gloves for washing soda, borax, bleach and citric acid; eye protection when mixing powders.</li>
+  <li>Label every bottle with what's in it and the date. Never reuse food or drink containers.</li>
+  <li>Keep essential oils away from cats, birds and small children.</li>
+  <li>No vinegar, lemon or citric acid on marble, granite, travertine, limestone, waxed wood or cast iron.</li></ul>
+  <div class="note danger"><b>Swallowed something or trouble breathing?</b> Get to fresh air and call Poison Control (US) at <a href="tel:18002221222">1-800-222-1222</a>, or emergency services.</div>
+  <p class="small muted">Sources: ${Object.values(SRC).map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" · ")}</p>`;
+}
+function saved(){const rs=D.recipes.filter(r=>S.saved.includes(r.id));return `<h2 style="margin-top:6px">Saved recipes</h2>${rs.map(card).join("")||`<p class="muted">Tap ♡ on a recipe to keep it here.</p>`}`}
+function draw(){
+  if(!D)return;const r=open&&D.recipes.find(x=>x.id===open);
+  $("#app").innerHTML=(r?detail(r):tab==="pantry"?pantry():tab==="safety"?safety():tab==="saved"?saved():list())+
+   `<footer>Version ${VERSION} · Build ${BUILD} · ${D.recipes.length} recipes<br>Homemade cleaners aren't lab-tested. Spot-test, label, and keep out of reach of children and pets.</footer>`;
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+  const qi=$("#q");if(qi)qi.oninput=e=>{q=e.target.value;const l=$("#list");const t=q.trim().toLowerCase();
+    const rs=D.recipes.filter(r=>(cat==="all"||r.cat===cat)&&(!t||[r.id,r.name,r.uses,...r.ing].join(" ").toLowerCase().includes(t)));
+    l.innerHTML=rs.map(card).join("")||`<p class="muted">No recipes match “${esc(q)}”.</p>`};
+}
+document.addEventListener("click",e=>{
+  const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-back],[data-fav]");if(!k)return;const d=k.dataset;
+  if(d.open){open=d.open;draw();scrollTo(0,0);history.pushState({open},"","#"+d.open);return}
+  if(d.tab){e.preventDefault();tab=d.tab;open=null;draw();scrollTo(0,0);history.pushState({},"","#"+tab);return}
+  if(d.cat){cat=d.cat;draw();return}
+  if(d.back!==undefined){history.length>1?history.back():(open=null,draw());return}
+  if(d.fav){S.saved=S.saved.includes(d.fav)?S.saved.filter(x=>x!==d.fav):[...S.saved,d.fav];save();draw()}
+});
+document.addEventListener("change",e=>{const h=e.target.dataset.have;if(!h)return;S.have=e.target.checked?[...new Set([...S.have,h])]:S.have.filter(x=>x!==h);save();draw()});
+function fromHash(){const h=location.hash.slice(1);if(/^R\d\d$/.test(h)){open=h}else{open=null;if(["recipes","pantry","safety","saved"].includes(h))tab=h}draw()}
+addEventListener("popstate",fromHash);
+fetch("data/recipes.json").then(r=>r.json()).then(j=>{D=j;fromHash()}).catch(()=>{$("#app").innerHTML=`<p>Couldn't load recipes. Check your connection and reload.</p>`});
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+</script>
+</body>
+</html>
