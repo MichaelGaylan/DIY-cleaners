@@ -12,6 +12,7 @@
 - [ ] MAKE-014 · What can I make? groups the makeable recipes by category, with a recipe count on each category tile like the Recipes page · UI · S · added 2026-11-17
 - [ ] MAKE-015 · New title bar with round icon buttons, including a gear that opens a new Settings page (reference: title-bar-reference.png) · UI · M · added 2026-11-17
 - [ ] MAKE-016 · Redo all remaining app icons in the agreed MAKE-012 style (glow tile on dark swatches, light chip on light) · UI · M · added 2026-11-17
+- [ ] MAKE-017 · Add Ammonia to the What can I make? ingredient list; ticking it shows a warning popup (never mix with bleach: chloramine gas; ventilate; store apart) that must be acknowledged before it is added · Safety · S · added 2026-11-17
 
 ## 🟡 Hold
 
@@ -33,4 +34,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-017
+Next free ID: MAKE-018
