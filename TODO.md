@@ -3,20 +3,23 @@
 ## 🔴 Needs you
 
 ## 🔵 Build list
-- [ ] MAKE-008 · Create a proper app icon (Home Screen and favicon) in VYBEON style · UI · S · added 2026-11-17
-- [ ] MAKE-009 · Color theme switcher using the 7 VYBEON ONE swatches (source: design/vybeon-theme-swatches.pdf): Blush #D8DEDA #F7E4DA #F5CAD3 #E7AEB5 #957F86; Midnight #111520 #212C45 #465B75 #788AA8 #EBE7D8; Mocha #E8DED6 #E1CCB4 #D7B795 #A7886C #7A573D #93674A; Coastal #F0A9A0 #F8F0DF #C5EEE4 #B6D7DE #5D636F; Rosewood #F3DBC0 #F0A9AE #C96A7C #963F5F #3F1020; Forest #D9D6D0 #A5B08C #62805C #405842 #384C42; Linen #ECEDE9 #D5CCC3 #F2E9E0 #DFD4CA #D1BCAE · UI · M · added 2026-11-17
-- [ ] MAKE-010 · Link for reporting problems (from a recipe and the ☰ menu) · UI · S · added 2026-11-17
-- [ ] MAKE-011 · Liquid glass buttons: a bubble stretches across and springs into place where it applies (nav tabs, category picks) · UI · M · added 2026-11-17
-- [ ] MAKE-012 · Replace Kitchen, Pets and Bugs category icons with picks K2 fork and knife, P1 paw print, B2 beetle; glow tile on dark swatches, light chip on light swatches (glyphs and tile rules: design/category-icons.py, preview: design/category-icon-options.html) · UI · S · added 2026-11-17
-- [ ] MAKE-013 · Safety gate on first open: one-time popup ("mixing chemicals can be life threatening") with OK that opens Safety; Safety ends with Accept / Decline; the app stays locked until Accept, and Decline loops back to the warning · Safety · M · added 2026-11-17
-- [ ] MAKE-014 · What can I make? groups the makeable recipes by category, with a recipe count on each category tile like the Recipes page · UI · S · added 2026-11-17
-- [ ] MAKE-015 · New title bar with round icon buttons, including a gear that opens a new Settings page (reference: title-bar-reference.png) · UI · M · added 2026-11-17
-- [ ] MAKE-016 · Redo all remaining app icons in the agreed MAKE-012 style (glow tile on dark swatches, light chip on light) · UI · M · added 2026-11-17
-- [ ] MAKE-017 · Add Ammonia to the What can I make? ingredient list; ticking it shows a warning popup (never mix with bleach: chloramine gas; ventilate; store apart) that must be acknowledged before it is added · Safety · S · added 2026-11-17
+(empty)
 
 ## 🟡 Hold
 
 ## 🟣 Done
+### 1.2.0 · build 2026.11.17-3
+- [x] MAKE-008 · Create a proper app icon (Home Screen and favicon) in VYBEON style · UI · S · added 2026-11-17
+- [x] MAKE-009 · Color theme switcher using the 7 VYBEON ONE swatches (source: design/vybeon-theme-swatches.pdf): Blush #D8DEDA #F7E4DA #F5CAD3 #E7AEB5 #957F86; Midnight #111520 #212C45 #465B75 #788AA8 #EBE7D8; Mocha #E8DED6 #E1CCB4 #D7B795 #A7886C #7A573D #93674A; Coastal #F0A9A0 #F8F0DF #C5EEE4 #B6D7DE #5D636F; Rosewood #F3DBC0 #F0A9AE #C96A7C #963F5F #3F1020; Forest #D9D6D0 #A5B08C #62805C #405842 #384C42; Linen #ECEDE9 #D5CCC3 #F2E9E0 #DFD4CA #D1BCAE · UI · M · added 2026-11-17
+- [x] MAKE-010 · Link for reporting problems (from a recipe and the ☰ menu) · UI · S · added 2026-11-17
+- [x] MAKE-011 · Liquid glass buttons: a bubble stretches across and springs into place where it applies (nav tabs, category picks) · UI · M · added 2026-11-17
+- [x] MAKE-012 · Replace Kitchen, Pets and Bugs category icons with picks K2 fork and knife, P1 paw print, B2 beetle; glow tile on dark swatches, light chip on light swatches (glyphs and tile rules: design/category-icons.py, preview: design/category-icon-options.html) · UI · S · added 2026-11-17
+- [x] MAKE-013 · Safety gate on first open: one-time popup ("mixing chemicals can be life threatening") with OK that opens Safety; Safety ends with Accept / Decline; the app stays locked until Accept, and Decline loops back to the warning · Safety · M · added 2026-11-17
+- [x] MAKE-014 · What can I make? groups the makeable recipes by category, with a recipe count on each category tile like the Recipes page · UI · S · added 2026-11-17
+- [x] MAKE-015 · New title bar with round icon buttons, including a gear that opens a new Settings page (reference: title-bar-reference.png) · UI · M · added 2026-11-17
+- [x] MAKE-016 · Redo all remaining app icons in the agreed MAKE-012 style (glow tile on dark swatches, light chip on light) · UI · M · added 2026-11-17
+- [x] MAKE-017 · Add Ammonia to the What can I make? ingredient list; ticking it shows a warning popup (never mix with bleach: chloramine gas; ventilate; store apart) that must be acknowledged before it is added · Safety · S · added 2026-11-17
+
 ### 1.1.1 · build 2026.11.17-2
 - [x] MAKE-005 · (fix) "MAIN" meant the all-recipes list: removed it, so Recipes opens on a category grid (Kitchen, Bathroom, Glass and mirrors…); the never-mix banner is back on top · UI · S · added 2026-11-16
 

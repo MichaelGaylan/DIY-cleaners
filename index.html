@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,73 +10,111 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-:root{--bg:#071338;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);--line:rgba(255,255,255,.12);--ink:#eef2ff;--muted:#a3adcf;
- --glow:linear-gradient(135deg,#22c4ff,#4b6bff 55%,#b04dff);--act:linear-gradient(135deg,#2fa8ff,#2463ff);--accent:#2fa8ff;
- --ok:#38e0a0;--warn:#f5c542;--bad:#ff6b6b;--r:18px}
+:root{--bg:#071338;--ink:#eef2ff;--muted:#a3adcf;--accent:#2fa8ff;--act:linear-gradient(135deg,#2fa8ff,#2463ff);--hdr:rgba(7,19,56,.82);--g1:rgba(34,196,255,.18);--g2:rgba(176,77,255,.18);
+ --glow:linear-gradient(135deg,#22c4ff,#4b6bff 55%,#b04dff);--r:18px;--spring:cubic-bezier(.34,1.56,.64,1);
+ --glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);--line:rgba(255,255,255,.12);--bub:rgba(255,255,255,.13);
+ --ok:#38e0a0;--warn:#f5c542;--bad:#ff6b6b;--pest:#c9a7ff;--tf:url(#tA);--tr:rgba(255,255,255,.9);--ti:#fff}
+[data-mode=light]{--glass:rgba(255,255,255,.55);--glass2:rgba(255,255,255,.8);--line:rgba(40,30,30,.13);--bub:rgba(255,255,255,.85);
+ --ok:#157a4f;--warn:#8a5a00;--bad:#b3261e;--pest:#6f37ad;--tf:#fff;--tr:url(#tR);--ti:#071338}
 *{box-sizing:border-box}html,body{margin:0}
 body{font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);
- background-image:radial-gradient(60% 40% at 15% 0%,rgba(34,196,255,.18),transparent 70%),radial-gradient(50% 40% at 100% 10%,rgba(176,77,255,.18),transparent 70%);background-attachment:fixed;
- padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:rgba(7,19,56,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-header .logo{width:34px;height:34px;border-radius:10px;background:var(--glow);display:grid;place-items:center;font-size:1.1rem;box-shadow:0 4px 18px rgba(75,107,255,.5)}
-header h1{flex:1;margin:0;font-size:1.1rem;font-weight:700;letter-spacing:.2px}
-.iconbtn{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font-size:1.1rem;cursor:pointer}
-main{max-width:760px;margin:0 auto;padding:12px 14px}
+ background-image:radial-gradient(60% 40% at 15% 0%,var(--g1),transparent 70%),radial-gradient(50% 40% at 100% 10%,var(--g2),transparent 70%);background-attachment:fixed;
+ padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+.ic{display:block;width:100%;height:100%}
+.ic .t1{fill:var(--tf);stroke:#071338;stroke-width:2}.ic .t2{fill:none;stroke:var(--tr);stroke-width:1.4}
+.ic .gl{fill:none;stroke:var(--ti);color:var(--ti);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+header{position:sticky;top:0;z-index:5;padding:calc(8px + env(safe-area-inset-top)) 10px 8px;background:linear-gradient(var(--bg) 55%,transparent)}
+.bar{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 10px;border-radius:22px;background:var(--hdr);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.bar .logo{width:40px;height:40px;flex:none;filter:drop-shadow(0 4px 14px rgba(75,107,255,.45))}
+.bar .tt{flex:1;min-width:0;display:flex;flex-direction:column}
+.bar h1{margin:0;font-size:1.15rem;font-weight:750;letter-spacing:.2px;line-height:1.15}
+.bar .tag{font:600 .56rem/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.7px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb{width:42px;height:42px;padding:0;border:none;background:none;border-radius:50%;cursor:pointer;flex:none;transition:transform .35s var(--spring)}
+.rb:active{transform:scale(.88)}
+[data-mode=light] .bar h1.glowtext{background:none;color:var(--ink)}
+main{max-width:760px;margin:0 auto;padding:6px 14px 12px}
 .search{width:100%;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit}
 .search::placeholder{color:var(--muted)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:999px;padding:7px 12px;font:inherit;font-size:.82rem;cursor:pointer;white-space:nowrap}
-.chip.on{background:var(--act);border-color:transparent}
 .card{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin:10px 0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .rc{display:flex;gap:12px;align-items:center;cursor:pointer;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:none;padding:0}
-.emo{font-size:1.4rem;width:44px;height:44px;display:grid;place-items:center;background:var(--glass2);border-radius:13px;flex:none}
+.emo{width:44px;height:44px;flex:none}
 .rc .t{flex:1;min-width:0}.rc b{display:block}.muted{color:var(--muted)}.small{font-size:.84rem}
 .badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid currentColor;margin:5px 6px 0 0;letter-spacing:.3px}
-.g-disinfects{color:var(--ok)}.g-sanitizes{color:var(--warn)}.g-cleans{color:var(--muted)}.g-pest{color:#c9a7ff}
+.g-disinfects{color:var(--ok)}.g-sanitizes{color:var(--warn)}.g-cleans{color:var(--muted)}.g-pest{color:var(--pest)}
 h2{font-size:1.02rem;margin:20px 0 6px}
 ol,ul{padding-left:22px;margin:6px 0}li{margin:4px 0}
-.note{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(245,197,66,.08);border:1px solid rgba(245,197,66,.35)}
-.danger{background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.4)}
+.note{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(245,197,66,.1);border:1px solid rgba(200,150,30,.45)}
+.danger{background:rgba(255,107,107,.1);border-color:rgba(220,70,70,.5)}
 .back{background:none;border:none;color:var(--accent);font:inherit;padding:6px 0;cursor:pointer}
-.btn{border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:14px;padding:11px 14px;font:inherit;cursor:pointer}
-.btn.primary{background:var(--act);border-color:transparent;font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:14px;padding:9px 14px;font:inherit;cursor:pointer;text-decoration:none;transition:transform .35s var(--spring)}
+.btn:active{transform:scale(.95)}.btn .bi{width:24px;height:24px;flex:none}
+.btn.primary{background:var(--act);border-color:transparent;font-weight:650;color:#fff;justify-content:center}
 .wide{width:100%}
 .cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.catcard{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;padding:14px;border-radius:var(--r);border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.catcard .ce{font-size:1.6rem;width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:var(--glass2);margin-bottom:4px}
+.catcard{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;padding:14px;border-radius:var(--r);border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .4s var(--spring)}
+.catcard:active{transform:scale(.95)}
+.catcard .ce{width:46px;height:46px;margin-bottom:4px}
 .catcard b{font-size:.95rem;line-height:1.25}
+.catcard .n{position:absolute;top:12px;right:12px;min-width:28px;padding:2px 8px;border-radius:999px;background:var(--act);color:#fff;font-size:.78rem;font-weight:700;text-align:center}
+.drop{position:absolute;border-radius:50%;background:var(--bub);pointer-events:none;transform:translate(-50%,-50%)}
 table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600}
-.mix{display:flex;gap:10px}
+.mix{display:flex;gap:12px;align-items:center}.mix .mi{width:36px;height:36px;flex:none}
 .pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .pantry label{display:flex;gap:8px;align-items:center;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:10px;cursor:pointer;font-size:.88rem}
-.pantry input{accent-color:#2fa8ff}
-nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;background:rgba(7,19,56,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;background:none;border:none;color:var(--muted);font:inherit;font-size:.72rem;padding:8px 0 10px;cursor:pointer}
-nav button span{display:block;font-size:1.25rem}nav button.on{color:#fff;font-weight:600}nav button.on span{filter:drop-shadow(0 0 8px rgba(47,168,255,.8))}
+.pantry label.amm{border-color:rgba(220,70,70,.55)}
+.pantry input{accent-color:var(--accent)}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:0 10px calc(8px + env(safe-area-inset-bottom))}
+nav .in{position:relative;max-width:760px;margin:0 auto;display:flex;padding:6px;border-radius:24px;background:var(--hdr);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 -4px 24px rgba(0,0,0,.18)}
+nav .bub{position:absolute;top:6px;bottom:6px;left:6px;width:0;border-radius:18px;background:var(--bub);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 16px rgba(0,0,0,.15);backdrop-filter:blur(6px)}
+nav button{position:relative;z-index:1;flex:1;background:none;border:none;color:var(--muted);font:inherit;font-size:.7rem;padding:6px 0 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button .ni{width:28px;height:28px;opacity:.75;transition:transform .4s var(--spring),opacity .2s}
+nav button.on{color:var(--ink);font-weight:650}nav button.on .ni{opacity:1;transform:scale(1.08)}
 a{color:var(--accent)}
-.fav{background:none;border:none;font-size:1.35rem;cursor:pointer;color:#ff7ab8}
+.fav{background:none;border:none;font-size:1.35rem;cursor:pointer;color:#e0508f}
 .sec{display:grid;grid-template-columns:92px 1fr;gap:4px 10px;margin:4px 0}.sec .k{color:var(--muted);font-size:.72rem;font-weight:700;letter-spacing:.6px;padding-top:3px}
 details.help{background:var(--glass);border:1px solid var(--line);border-radius:14px;margin:8px 0;padding:10px 14px}
-details.help summary{cursor:pointer;font-weight:600;list-style:none}details.help summary::-webkit-details-marker{display:none}
+details.help summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}details.help summary::-webkit-details-marker{display:none}
+details.help summary .hi{width:28px;height:28px;flex:none}
 details.help p{margin:8px 0 2px;line-height:1.5}
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}.stat{background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:10px 12px}.stat b{display:block;font-size:1.05rem}
 .glowtext{background:var(--glow);-webkit-background-clip:text;background-clip:text;color:transparent}
+.themes{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.th{position:relative;z-index:1;display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:16px;border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit;font-size:.86rem;cursor:pointer;text-align:left}
+.th .sw{display:flex;height:22px;border-radius:8px;overflow:hidden;border:1px solid rgba(0,0,0,.15)}.th .sw i{flex:1}
+.th.on{border-color:transparent}
+.themes .bub{position:absolute;z-index:2;pointer-events:none;border-radius:16px;border:2.5px solid var(--accent);box-shadow:0 0 0 4px rgba(127,140,255,.18)}
+#ov{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(3,8,24,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#ov[hidden]{display:none}
+#ov .box{max-width:420px;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.45);animation:pop .45s var(--spring)}
+#ov .box .bi{width:60px;height:60px;margin:0 auto 10px}
+#ov h2{text-align:center;margin:0 0 8px;font-size:1.2rem}
+#ov .acts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+.locked header .rb,.locked nav{pointer-events:none;opacity:.35}
+.accept{border:2px solid var(--bad)}
+@media (max-width:375px){.bar .tag{letter-spacing:.2px;font-size:.5rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{nav,header,.back,.noprint{display:none}body{background:#fff;color:#000}.card{border:1px solid #999;background:none}}
 </style>
 </head>
 <body>
-<header><div class="logo">🧴</div><h1>DIY Cleaners</h1><button class="iconbtn" data-tab="menu" aria-label="Menu">☰</button></header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="tA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a55e8"/><stop offset="1" stop-color="#8338d6"/></linearGradient>
+<linearGradient id="tR" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c4ff"/><stop offset=".55" stop-color="#4b6bff"/><stop offset="1" stop-color="#b04dff"/></linearGradient></defs></svg>
+<header><div class="bar"><span class="logo" data-ic="logo"></span><div class="tt"><h1 class="glowtext">DIY Cleaners</h1><span class="tag">SAFE CLEANERS YOU MIX AT HOME</span></div>
+ <button class="rb" data-tab="help" aria-label="Help" data-ic="help" data-r="1"></button><button class="rb" data-tab="settings" aria-label="Settings" data-ic="settings" data-r="1"></button></div></header>
 <main id="app"><p class="muted">Loading recipes…</p></main>
-<nav id="nav">
- <button data-tab="recipes" class="on"><span>🧽</span>Recipes</button>
- <button data-tab="pantry"><span>🧺</span>What can I make?</button>
- <button data-tab="safety"><span>⚠️</span>Safety</button>
- <button data-tab="saved"><span>♥</span>Saved</button>
-</nav>
+<nav id="nav"><div class="in"><div class="bub"></div>
+ <button data-tab="recipes" class="on"><span class="ni" data-ic="recipes"></span>Recipes</button>
+ <button data-tab="pantry"><span class="ni" data-ic="pantry"></span>What can I make?</button>
+ <button data-tab="safety"><span class="ni" data-ic="safety"></span>Safety</button>
+ <button data-tab="saved"><span class="ni" data-ic="saved"></span>Saved</button>
+</div></nav>
+<div id="ov" hidden role="dialog" aria-modal="true"></div>
 <script>
 /* Release info: bump VERSION per release and BUILD per published build (Build Directive) */
-const VERSION="1.1.1",BUILD="2026.11.17-2";
-const CHANGES=[["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
+const VERSION="1.2.0",BUILD="2026.11.17-3";
+const CHANGES=[["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
 const GERM={disinfects:["DISINFECT","Kills most germs when made and used exactly as written: a public-health bleach dilution with its full wet contact time, on a surface you cleaned first."],
  sanitizes:["SANITIZE","Reduces germs to safe levels using a published public-health method (bleach dilution, boiling, or a hot wash and dry)."],
  cleans:["CLEANS ONLY","Removes dirt, grease and odor. It makes no germ-kill claim. When someone is sick, follow with a recipe marked Sanitize or Disinfect."],
@@ -85,7 +123,7 @@ const PANTRY=[["vinegar","White vinegar",/white (distilled )?vinegar|cleaning vi
  ["dishsoap","Dish soap",/dish soap|dishwashing liquid/],["castile","Castile soap",/castile/],["detergent","Laundry detergent",/detergent/],["peroxide","3% hydrogen peroxide",/peroxide/],
  ["alcohol","Rubbing alcohol",/isopropyl|rubbing alcohol|vodka/],["oxygen","Oxygen bleach",/oxygen bleach|percarbonate/],["bleach","Unscented bleach",/(?<!oxygen )\bbleach\b/],
  ["salt","Salt",/\bsalt\b/],["cornstarch","Cornstarch",/cornstarch/],["citrus","Lemons / limes",/lemon|lime\b|limes|orange/],["oil","Cooking oil",/vegetable oil|olive oil|coconut oil|cooking oil|mineral oil/],
- ["citric","Citric acid",/citric acid/],["borax","Borax",/borax/],["acv","Apple cider vinegar",/apple cider/],["eo","Essential oils",/essential oil/],["de","Diatomaceous earth",/diatomaceous/]];
+ ["citric","Citric acid",/citric acid/],["borax","Borax",/borax/],["acv","Apple cider vinegar",/apple cider/],["eo","Essential oils",/essential oil/],["de","Diatomaceous earth",/diatomaceous/],["ammonia","Household ammonia",/ammonia/]];
 const NEVERMIX=[["Bleach + vinegar, lemon or any acid","Chlorine gas: severe lung and eye injury"],["Bleach + ammonia (some glass cleaners, urine)","Chloramine gases: coughing, chest pain, lung damage"],
  ["Bleach + rubbing alcohol","Chloroform and other toxic compounds"],["Bleach + hydrogen peroxide","Violent oxygen release and splashing"],["Hydrogen peroxide + vinegar in one bottle","Peracetic acid, corrosive to skin, eyes and lungs"],
  ["Bleach + toilet-bowl or drain cleaner","Chlorine gas or heat: toxic fumes, splattering"],["Two different drain cleaners","Heat, pressure and splashing: chemical burns"],["Baking soda + vinegar in a capped bottle","Pressure can burst it, and the mix cancels out; combine only at the point of use"]];
@@ -97,29 +135,50 @@ const SOURCES=[["CDC: Cleaning and disinfecting with bleach","https://www.cdc.go
  ["EPA: Six steps for safe disinfectant use","https://www.epa.gov/coronavirus/six-steps-safe-effective-disinfectant-use"],["EPA: Household substances","https://www.epa.gov/coronavirus-and-disinfectants/can-i-use-common-household-substances-kill-novel-coronavirus"],
  ["USDA: Clean, then sanitize","https://www.usda.gov/media/blog/2019/08/27/clean-then-sanitize-one-two-punch-stop-foodborne-illness-kitchen"],["ASPCA: Poisonous household products","https://www.aspca.org/pet-care/aspca-poison-control/poisonous-household-products"],
  ["U. of Illinois Extension: Clean and sanitize the kitchen","https://extension.illinois.edu/food/cleaning-kitchen"],["Virginia Tech Extension: Hand sanitizers","https://pubs.ext.vt.edu/FST/FST-407/FST-407.html"]];
-const HELP=[["🔎","Finding a recipe","Pick a category (Kitchen, Bathroom, Glass and mirrors and so on) to see its recipes, or type in the search box: a surface, a stain, an ingredient or a number like 112. Tap a recipe to open it."],
- ["🏷️","What the labels mean","CLEANS ONLY removes dirt, grease and odor, with no germ-kill claim. SANITIZE reduces germs to safe levels using a published public-health method. DISINFECT kills most germs when made exactly as written. Clean first, then sanitize or disinfect."],
- ["📖","Reading a recipe","Each recipe lists ingredients with amounts, how to prepare it, how to apply it, its limits (surfaces and materials to avoid), and storage. Read the limits before you start, and test a hidden spot."],
- ["🧺","What can I make?","Tick what's in your cupboard. Water is always assumed. You'll see what you can mix now, and what needs just one more item."],
- ["⚠️","Safety","Never mix bleach with anything but water. Use one product at a time and rinse between products. Open the Safety tab for the never-mix chart, bleach dilutions and emergency numbers."],
- ["♥","Saving and printing","Tap ♡ on a recipe to keep it in Saved. Use Print label to print the recipe for the bottle."],
- ["📲","Install and offline","Add it to your Home Screen to open it like an app: in Safari tap Share, then Add to Home Screen; in Chrome tap ⋮, then Install app. After your first visit it works without a signal."],
- ["💾","Your data","Saved recipes and your cupboard list stay in this browser on this device. Nothing is sent anywhere."]];
-const KEY="diy-cleaning-v1";let S={saved:[],have:[]};try{Object.assign(S,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
+const IC={"kitchen":"<path d=\"M5 3v4.5a2.5 2.5 0 0 0 5 0V3M7.5 3v18\"/><path d=\"M17 21V3c2.5 1.5 3.5 5 3.5 9H17\"/>","pets":"<g fill=\"currentColor\" stroke=\"none\"><circle cx=\"5.5\" cy=\"10\" r=\"2.1\"/><circle cx=\"9.3\" cy=\"5.6\" r=\"2.1\"/><circle cx=\"14.7\" cy=\"5.6\" r=\"2.1\"/><circle cx=\"18.5\" cy=\"10\" r=\"2.1\"/><path d=\"M12 11c-3.2 0-6 3.8-6 6.4 0 1.7 1.3 2.8 2.9 2.8 1.2 0 2-.6 3.1-.6s1.9.6 3.1.6c1.6 0 2.9-1.1 2.9-2.8 0-2.6-2.8-6.4-6-6.4z\"/></g>","pests":"<path d=\"M12 7.5c3.6 0 6 3 6 6.8 0 3.6-2.6 6.2-6 6.2s-6-2.6-6-6.2c0-3.8 2.4-6.8 6-6.8z\"/><path d=\"M9.2 8.2a2.8 2.8 0 0 1 5.6 0M12 8v12.3M10 5.4 8.5 3M14 5.4 15.5 3M6 12H2.8M6.2 16.5 3.2 18.5M18 12h3.2M17.8 16.5l3 2\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"9.3\" cy=\"12.6\" r=\"1\"/><circle cx=\"14.7\" cy=\"12.6\" r=\"1\"/><circle cx=\"9.5\" cy=\"16.6\" r=\"1\"/><circle cx=\"14.5\" cy=\"16.6\" r=\"1\"/></g>","bathroom":"<path d=\"M3 12h18v1.5a5.5 5.5 0 0 1-5.5 5.5h-7A5.5 5.5 0 0 1 3 13.5z\"/><path d=\"M6 12V5.8A2.8 2.8 0 0 1 8.8 3c1.3 0 2.2.8 2.5 2\"/><path d=\"M7.5 19l-1 2.2M16.5 19l1 2.2\"/>","surfaces":"<path d=\"M4 11h13a3 3 0 0 1 3 3v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z\"/><path d=\"M4 15h16\"/><circle cx=\"8\" cy=\"5.5\" r=\"2\"/><circle cx=\"13.5\" cy=\"4\" r=\"1.3\"/><circle cx=\"17.5\" cy=\"7\" r=\"1.5\"/>","glass":"<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"3\"/><path d=\"M8 10l4-4M8 15l8-8\"/>","laundry":"<rect x=\"4\" y=\"2.5\" width=\"16\" height=\"19\" rx=\"3\"/><path d=\"M4 7h16\"/><circle cx=\"12\" cy=\"14.2\" r=\"4.3\"/><path d=\"M9.2 14.6c.9-.9 1.9.9 2.8 0s1.9.9 2.8 0\" stroke-width=\"1.6\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"7.4\" cy=\"4.8\" r=\"1\"/><circle cx=\"10.2\" cy=\"4.8\" r=\"1\"/></g>","upholstery":"<path d=\"M5 11V8a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v3\"/><path d=\"M3 13a2 2 0 0 1 4 0v2h10v-2a2 2 0 0 1 4 0v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/><path d=\"M6 19v2M18 19v2\"/>","outdoor":"<path d=\"M3 11 12 4l9 7\"/><path d=\"M5 9.5V20h14V9.5\"/><path d=\"M8.5 20v-6h7v6M8.5 17h7\"/>","specialty":"<circle cx=\"12\" cy=\"16\" r=\"5.3\"/><path d=\"M8.2 2.5h7.6l2.7 3.2L12 10.7 5.5 5.7z\"/><path d=\"M5.5 5.7h13M10.2 2.5 9 5.7l3 5M13.8 2.5 15 5.7l-3 5\" stroke-width=\"1.3\"/>","odor":"<path d=\"M5 19.5C5 10.5 11 5 20 4c0 9-5.5 15.5-15 15.5z\"/><path d=\"M5 19.5l9-9\"/>","recipes":"<path d=\"M12 6.2C10 4.7 7 4.2 3.5 4.6v14.2c3.5-.4 6.5.1 8.5 1.6 2-1.5 5-2 8.5-1.6V4.6C17 4.2 14 4.7 12 6.2z\"/><path d=\"M12 6.2v14.2\"/>","pantry":"<path d=\"M6.5 3.5h11V7h-11z\"/><path d=\"M7 7h10v11a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3z\"/><path d=\"M7 11h10v5H7\"/>","safety":"<path d=\"M12 2.5 4 5.5v6c0 5 3.4 8.8 8 10 4.6-1.2 8-5 8-10v-6z\"/><path d=\"M12 8v5\"/><circle cx=\"12\" cy=\"16.4\" r=\"1.1\" fill=\"currentColor\" stroke=\"none\"/>","saved":"<path d=\"M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z\"/>","logo":"<path d=\"M7.5 10.5a2 2 0 0 1 2-2h3.5a2 2 0 0 1 2 2V20a1.5 1.5 0 0 1-1.5 1.5H9A1.5 1.5 0 0 1 7.5 20z\"/><path d=\"M9.8 8.5V6.2h3v2.3\"/><path d=\"M7.5 3h7l1.5 3.2H9.6\"/><path d=\"M7.5 3v3\"/><path d=\"M9.8 17.6c0-2.3 1.4-3.6 3.6-3.6 0 2.3-1.4 3.6-3.6 3.6z\" fill=\"currentColor\" stroke=\"none\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"18.6\" cy=\"2.8\" r=\".9\"/><circle cx=\"20.4\" cy=\"5\" r=\".9\"/><circle cx=\"18.6\" cy=\"7.2\" r=\".9\"/></g>","settings":"<path d=\"M18.57 9.06 L21.37 9.90 L21.37 14.10 L18.57 14.94 L18.72 14.57 L20.11 17.14 L17.14 20.11 L14.57 18.72 L14.94 18.57 L14.10 21.37 L9.90 21.37 L9.06 18.57 L9.43 18.72 L6.86 20.11 L3.89 17.14 L5.28 14.57 L5.43 14.94 L2.63 14.10 L2.63 9.90 L5.43 9.06 L5.28 9.43 L3.89 6.86 L6.86 3.89 L9.43 5.28 L9.06 5.43 L9.90 2.63 L14.10 2.63 L14.94 5.43 L14.57 5.28 L17.14 3.89 L20.11 6.86 L18.72 9.43Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>","help":"<circle cx=\"12\" cy=\"12\" r=\"9.5\"/><path d=\"M9.4 9.3a2.7 2.7 0 0 1 5.2.9c0 1.9-2.6 2.2-2.6 4\"/><circle cx=\"12\" cy=\"17.2\" r=\"1.1\" fill=\"currentColor\" stroke=\"none\"/>","about":"<circle cx=\"12\" cy=\"12\" r=\"9.5\"/><path d=\"M12 11v6\"/><circle cx=\"12\" cy=\"7.6\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/>","nevermix":"<path d=\"M9 3h6M10 3v5l-4.5 9.5A2.4 2.4 0 0 0 7.7 21h8.6a2.4 2.4 0 0 0 2.2-3.5L14 8V3\"/><path d=\"M9.3 13.3l5.4 5.4M14.7 13.3l-5.4 5.4\"/>","print":"<path d=\"M7 9V3h10v6\"/><path d=\"M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2\"/><path d=\"M7 13h10v8H7z\"/>","search":"<circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.5 15.5 21 21\"/>","install":"<rect x=\"6\" y=\"2.5\" width=\"12\" height=\"19\" rx=\"3\"/><path d=\"M12 7v7M9 11l3 3 3-3M10 18.5h4\"/>","data":"<ellipse cx=\"12\" cy=\"5.5\" rx=\"7.5\" ry=\"3\"/><path d=\"M4.5 5.5v13c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-13\"/><path d=\"M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3\"/>"};
+const THEMES=[
+ {id:"vybeon",name:"VYBEON",mode:"dark",sw:["#071338","#22c4ff","#4b6bff","#b04dff","#2463ff"],v:{bg:"#071338",ink:"#eef2ff",muted:"#a3adcf",accent:"#2fa8ff",act:"linear-gradient(135deg,#2fa8ff,#2463ff)",hdr:"rgba(7,19,56,.82)",g1:"rgba(34,196,255,.18)",g2:"rgba(176,77,255,.18)"}},
+ {id:"blush",name:"Blush",mode:"light",sw:["#D8DEDA","#F7E4DA","#F5CAD3","#E7AEB5","#957F86"],v:{bg:"#F7E4DA",ink:"#3a2b31",muted:"#6b5660",accent:"#8a4a5c",act:"linear-gradient(135deg,#86707a,#6a5660)",hdr:"rgba(250,236,229,.86)",g1:"rgba(245,202,211,.75)",g2:"rgba(216,222,218,.85)"}},
+ {id:"midnight",name:"Midnight",mode:"dark",sw:["#111520","#212C45","#465B75","#788AA8","#EBE7D8"],v:{bg:"#111520",ink:"#EBE7D8",muted:"#a9b4c8",accent:"#9fb3d6",act:"linear-gradient(135deg,#465B75,#2b3957)",hdr:"rgba(33,44,69,.82)",g1:"rgba(120,138,168,.2)",g2:"rgba(70,91,117,.3)"}},
+ {id:"mocha",name:"Mocha",mode:"light",sw:["#E8DED6","#E1CCB4","#D7B795","#A7886C","#7A573D","#93674A"],v:{bg:"#E8DED6",ink:"#3a2717",muted:"#614b3b",accent:"#7A573D",act:"linear-gradient(135deg,#93674A,#7A573D)",hdr:"rgba(240,232,225,.86)",g1:"rgba(215,183,149,.55)",g2:"rgba(225,204,180,.65)"}},
+ {id:"coastal",name:"Coastal",mode:"light",sw:["#F0A9A0","#F8F0DF","#C5EEE4","#B6D7DE","#5D636F"],v:{bg:"#F8F0DF",ink:"#2a2f38",muted:"#525864",accent:"#356b76",act:"linear-gradient(135deg,#5D636F,#444955)",hdr:"rgba(251,246,235,.86)",g1:"rgba(197,238,228,.85)",g2:"rgba(240,169,160,.4)"}},
+ {id:"rosewood",name:"Rosewood",mode:"dark",sw:["#F3DBC0","#F0A9AE","#C96A7C","#963F5F","#3F1020"],v:{bg:"#3F1020",ink:"#F3DBC0",muted:"#dcb0aa",accent:"#F0A9AE",act:"linear-gradient(135deg,#b45a6c,#963F5F)",hdr:"rgba(90,28,48,.82)",g1:"rgba(240,169,174,.16)",g2:"rgba(201,106,124,.26)"}},
+ {id:"forest",name:"Forest",mode:"dark",sw:["#D9D6D0","#A5B08C","#62805C","#405842","#384C42"],v:{bg:"#384C42",ink:"#F1EFEA",muted:"#c9d0b8",accent:"#cfd8b2",act:"linear-gradient(135deg,#5a7854,#405842)",hdr:"rgba(64,88,66,.84)",g1:"rgba(165,176,140,.2)",g2:"rgba(98,128,92,.3)"}},
+ {id:"linen",name:"Linen",mode:"light",sw:["#ECEDE9","#D5CCC3","#F2E9E0","#DFD4CA","#D1BCAE"],v:{bg:"#F2E9E0",ink:"#352d27",muted:"#645951",accent:"#7d5f4c",act:"linear-gradient(135deg,#8c7565,#6e5a4c)",hdr:"rgba(246,240,234,.86)",g1:"rgba(213,204,195,.65)",g2:"rgba(209,188,174,.55)"}}];
+const HELP=[["search","Finding a recipe","Pick a category (Kitchen, Bathroom, Glass and mirrors and so on) to see its recipes, or type in the search box: a surface, a stain, an ingredient or a number like 112. Tap a recipe to open it."],
+ ["about","What the labels mean","CLEANS ONLY removes dirt, grease and odor, with no germ-kill claim. SANITIZE reduces germs to safe levels using a published public-health method. DISINFECT kills most germs when made exactly as written. Clean first, then sanitize or disinfect."],
+ ["recipes","Reading a recipe","Each recipe lists ingredients with amounts, how to prepare it, how to apply it, its limits (surfaces and materials to avoid), and storage. Read the limits before you start, and test a hidden spot."],
+ ["pantry","What can I make?","Tick what's in your cupboard. Water is always assumed. Recipes you can make now, and ones that need just one more item, are sorted into categories with a count on each. Tap a category to see them. Ticking ammonia shows a warning first: no recipe here uses it, and it must never meet bleach."],
+ ["safety","Safety","The first time you open the app you'll be asked to read the Safety page and accept it. Never mix bleach with anything but water. Use one product at a time and rinse between products. The Safety tab has the never-mix chart, bleach dilutions and emergency numbers."],
+ ["saved","Saving and printing","Tap ♡ on a recipe to keep it in Saved. Use Print label to print the recipe for the bottle."],
+ ["settings","Settings and color themes","Tap the gear at the top right. Pick one of 8 color themes: VYBEON or the 7 VYBEON ONE swatches. Icons switch to glow tiles on dark themes and light chips on light themes. Settings also has Report a problem and About."],
+ ["nevermix","Reporting a problem","Use Report a problem in Settings, or the link at the bottom of any recipe. It opens a pre-filled report on GitHub (a free GitHub account is needed). Don't include personal details."],
+ ["install","Install and offline","Add it to your Home Screen to open it like an app: in Safari tap Share, then Add to Home Screen; in Chrome tap ⋮, then Install app. After your first visit it works without a signal."],
+ ["data","Your data","Saved recipes, your cupboard list, your theme and your safety acceptance stay in this browser on this device. Nothing is sent anywhere."]];
+const KEY="diy-cleaning-v1";let S={saved:[],have:[],theme:"vybeon",accepted:null};try{Object.assign(S,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-let D=null,tab="recipes",cat=null,q="",open=null,limit=60;
+let D=null,tab="recipes",cat=null,q="",open=null,limit=60,pc=null,gate=S.accepted?null:"popup";
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pad=n=>String(n).padStart(3,"0"),catOf=id=>D.categories.find(c=>c.id===id);
+const ic=(k,r)=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="t1" x="1" y="1" width="30" height="30" rx="${r?15:9}"/><rect class="t2" x="2.7" y="2.7" width="26.6" height="26.6" rx="${r?13.3:7.5}"/><g class="gl" transform="translate(6.4 6.4) scale(.8)">${IC[k]||""}</g></svg>`;
+const hydrate=(root=document)=>root.querySelectorAll("[data-ic]").forEach(e=>e.innerHTML=ic(e.dataset.ic,e.dataset.r));
+const REPO="https://github.com/MichaelGaylan/DIY-cleaners";
+const report=r=>`${REPO}/issues/new?title=${encodeURIComponent(r?`Problem with recipe #${pad(r.no)} ${r.name}`:"Problem in DIY Cleaners")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
+function applyTheme(){const t=THEMES.find(x=>x.id===S.theme)||THEMES[0],el=document.documentElement;
+  Object.entries(t.v).forEach(([k,v])=>el.style.setProperty("--"+k,v));el.dataset.mode=t.mode;document.querySelector('meta[name="theme-color"]').content=t.v.bg}
 const badge=r=>`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`;
-const card=(r,extra="")=>`<div class="card"><button class="rc" data-open="${r.no}"><div class="emo">${catOf(r.cat).emo}</div><div class="t"><b>${esc(r.name)}</b><span class="muted small">#${pad(r.no)} · ${catOf(r.cat).name}</span>${extra}<br>${badge(r)}</div><span class="muted">›</span></button></div>`;
+const card=(r,extra="")=>`<div class="card"><button class="rc" data-open="${r.no}"><div class="emo">${ic(r.cat)}</div><div class="t"><b>${esc(r.name)}</b><span class="muted small">#${pad(r.no)} · ${catOf(r.cat).name}</span>${extra}<br>${badge(r)}</div><span class="muted">›</span></button></div>`;
 const hay=r=>(r._h=r._h||[pad(r.no),String(r.no),r.name,r.apply,...r.ing].join(" ").toLowerCase());
+const plural=n=>`${n} recipe${n===1?"":"s"}`;
 function matches(){const t=q.trim().toLowerCase();return D.recipes.filter(r=>(!cat||r.cat===cat)&&(!t||t.split(/\s+/).every(w=>hay(r).includes(w))))}
-function grid(){return `<div class="cats">${D.categories.map(c=>`<button class="catcard" data-cat="${c.id}"><span class="ce">${c.emo}</span><b>${c.name}</b><span class="muted small">${D.recipes.filter(r=>r.cat===c.id).length} recipes</span></button>`).join("")}</div>`}
+function catGrid(rs,attr){return `<div class="cats">${D.categories.filter(c=>rs.some(r=>r.cat===c.id)).map(c=>{const n=rs.filter(r=>r.cat===c.id).length;
+  return `<button class="catcard" ${attr(c.id)}><span class="ce">${ic(c.id)}</span><span class="n">${n}</span><b>${c.name}</b><span class="muted small">${plural(n)}</span></button>`}).join("")}</div>`}
+function grid(){return catGrid(D.recipes,id=>`data-cat="${id}"`)}
 function listHTML(){if(!cat&&!q.trim())return grid();const rs=matches();return (rs.slice(0,limit).map(r=>card(r)).join("")||`<p class="muted">No recipes match “${esc(q)}”.</p>`)+
   (rs.length>limit?`<button class="btn wide" data-more>Show more (${rs.length-limit} left)</button>`:"")}
 function list(){
   const c=cat&&catOf(cat);
-  return (c?`<button class="back" data-cat="">‹ Categories</button><h2 style="margin:2px 0 10px">${c.emo} ${c.name} <span class="muted small">· ${D.recipes.filter(r=>r.cat===cat).length}</span></h2>`
+  return (c?`<button class="back" data-cat="">‹ Categories</button><h2 style="margin:2px 0 10px;display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px">${ic(c.id)}</span>${c.name} <span class="muted small">· ${D.recipes.filter(r=>r.cat===cat).length}</span></h2>`
    :`<div class="note danger small"><b>Never mix bleach with vinegar,</b> ammonia, alcohol, peroxide or any other cleaner. Bleach mixes only with water. <a href="#safety" data-tab="safety">Never-mix chart</a></div>`)+
   `<input class="search" id="q" type="search" placeholder="${c?`Search ${c.name}`:`Search all ${D.recipes.length} recipes`}" value="${esc(q)}" aria-label="Search recipes">
   <div id="list" style="margin-top:10px">${listHTML()}</div>`;
@@ -128,7 +187,7 @@ function detail(r){
   const c=catOf(r.cat),fav=S.saved.includes(r.no);
   const row=(k,v)=>`<div class="sec"><div class="k">${k}</div><div>${v}</div></div>`;
   return `<button class="back" data-back>‹ Back</button>
-  <div class="card"><div class="rc" style="cursor:default"><div class="emo">${c.emo}</div><div class="t"><span class="muted small">#${pad(r.no)} · ${c.name}</span><h2 style="margin:2px 0;font-size:1.2rem">${esc(r.name)}</h2>${badge(r)}</div>
+  <div class="card"><div class="rc" style="cursor:default"><div class="emo">${ic(r.cat)}</div><div class="t"><span class="muted small">#${pad(r.no)} · ${c.name}</span><h2 style="margin:2px 0;font-size:1.2rem">${esc(r.name)}</h2>${badge(r)}</div>
   <button class="fav noprint" data-fav="${r.no}" aria-label="${fav?"Remove from saved":"Save"}">${fav?"♥":"♡"}</button></div>
   <p class="small muted" style="margin:8px 0 0">${GERM[r.germ][1]}</p></div>
   ${r.germ==="disinfects"||r.germ==="sanitizes"?`<div class="note danger small"><b>Bleach mixes only with water.</b> Never add vinegar, lemon, ammonia, alcohol, peroxide or any other cleaner.</div>`:""}
@@ -137,20 +196,25 @@ function detail(r){
   ${row("PREPARE",esc(r.prepare))}${row("APPLY",esc(r.apply))}
   ${row("LIMITS",`<ul style="margin:0">${r.limits.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>`)}
   ${row("STORAGE",esc(r.storage))}</div>
-  <div class="noprint" style="display:flex;gap:8px;margin-top:10px"><button class="btn" onclick="window.print()">🖨 Print label</button><button class="btn" data-tab="safety">⚠️ Never-mix chart</button></div>
-  <p class="small muted">${r.src==="book"?"From VYBEON Clean: 250 DIY Household Cleaning Recipes.":"From the DIY Cleaners recipe library."} Test a hidden spot first and label every container with contents and date.</p>`;
+  <div class="noprint" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn" onclick="window.print()"><span class="bi">${ic("print")}</span>Print label</button><button class="btn" data-tab="safety"><span class="bi">${ic("nevermix")}</span>Never-mix chart</button></div>
+  <p class="small muted">${r.src==="book"?"From VYBEON Clean: 250 DIY Household Cleaning Recipes.":"From the DIY Cleaners recipe library."} Test a hidden spot first and label every container with contents and date.</p>
+  <p class="small noprint"><a href="${report(r)}" target="_blank" rel="noopener">Report a problem with this recipe</a></p>`;
 }
 function pantry(){
   const have=new Set(S.have),ok=D.recipes.filter(r=>r.needs.length&&r.needs.every(n=>have.has(n))),near=D.recipes.filter(r=>!ok.includes(r)&&r.needs.filter(n=>!have.has(n)).length===1);
   const nm=Object.fromEntries(PANTRY.map(p=>[p[0],p[1]]));
+  const needLine=r=>`<br><span class="small" style="color:var(--warn)">Need: ${r.needs.filter(n=>!have.has(n)).map(n=>nm[n]).join(", ")}</span>`;
+  if(pc){const [kind,id]=pc.split(":"),c=catOf(id),rs=(kind==="ok"?ok:near).filter(r=>r.cat===id);
+    return `<button class="back" data-pc="">‹ What can I make?</button><h2 style="margin:2px 0 4px;display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px">${ic(id)}</span>${c.name} <span class="muted small">· ${rs.length}</span></h2>
+    <p class="small muted" style="margin:0">${kind==="ok"?"You can make these now":"One ingredient away"}</p>${rs.map(r=>card(r,kind==="ok"?"":needLine(r))).join("")||`<p class="muted small">Nothing here now. Go back and tick more ingredients.</p>`}`}
   return `<h2 style="margin-top:6px">What do you have?</h2><p class="small muted">Tick what's in your cupboard. Water is always assumed.</p>
-  <div class="pantry">${PANTRY.map(([k,v])=>`<label><input type="checkbox" data-have="${k}" ${have.has(k)?"checked":""}> ${v}</label>`).join("")}</div>
-  <h2>You can make now <span class="muted small">· ${ok.length}</span></h2>${ok.slice(0,80).map(r=>card(r)).join("")||`<p class="muted small">Tick a few ingredients to see recipes.</p>`}
-  ${near.length?`<h2>One ingredient away <span class="muted small">· ${near.length}</span></h2>`+near.slice(0,40).map(r=>card(r,`<br><span class="small" style="color:var(--warn)">Need: ${r.needs.filter(n=>!have.has(n)).map(n=>nm[n]).join(", ")}</span>`)).join(""):""}`;
+  <div class="pantry">${PANTRY.map(([k,v])=>`<label${k==="ammonia"?' class="amm"':""}><input type="checkbox" data-have="${k}" ${have.has(k)?"checked":""}> ${v}${k==="ammonia"?" ⚠":""}</label>`).join("")}</div>
+  <h2>You can make now <span class="muted small">· ${ok.length}</span></h2>${ok.length?catGrid(ok,id=>`data-pc="ok:${id}"`):`<p class="muted small">Tick a few ingredients to see recipes.</p>`}
+  ${near.length?`<h2>One ingredient away <span class="muted small">· ${near.length}</span></h2>`+catGrid(near,id=>`data-pc="near:${id}"`):""}`;
 }
 function safety(){
   return `<div class="note danger"><b>NEVER MIX BLEACH WITH VINEGAR,</b> or with ammonia, alcohol, peroxide, acids or any other cleaner. Bleach mixes only with water.</div>
-  <h2>Never-mix chart</h2>${NEVERMIX.map(([a,b])=>`<div class="card mix"><div>🚫</div><div><b>${a}</b><div class="small muted">${b}</div></div></div>`).join("")}
+  <h2>Never-mix chart</h2>${NEVERMIX.map(([a,b])=>`<div class="card mix"><span class="mi">${ic("nevermix")}</span><div><b>${a}</b><div class="small muted">${b}</div></div></div>`).join("")}
   <h2>What really kills germs</h2>
   <p class="small">Vinegar, lemon, baking soda, washing soda, salt, dish soap and essential oils clean, but they do not disinfect. No vinegar product is EPA-registered as a disinfectant. Only the bleach dilutions below (or an EPA-registered disinfectant used exactly as labeled) sanitize or disinfect, and only on a surface you cleaned first.</p>
   <div class="card" style="overflow-x:auto"><table><thead><tr><th>Purpose</th><th>Bleach</th><th>Water</th><th>Contact</th></tr></thead>
@@ -164,17 +228,26 @@ function safety(){
   <li>Never put cleaners on skin or on pets. Wash your hands for 20 seconds after cleaning.</li></ul>
   <h2>Emergency numbers</h2>
   <div class="card small">People, Poison Help (US): <a href="tel:18002221222">1-800-222-1222</a><br>Pets, ASPCA Animal Poison Control: <a href="tel:18884264435">(888) 426-4435</a><br>Life-threatening emergency: <a href="tel:911">911</a></div>
-  <p class="small muted">Sources: ${SOURCES.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" · ")}</p>`;
+  <p class="small muted">Sources: ${SOURCES.map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join(" · ")}</p>
+  ${gate?`<div class="card accept" id="accept"><b>Do you accept these safety warnings?</b><p class="small">By tapping Accept you confirm you have read this page and will never mix bleach with ammonia, acids, alcohol, peroxide or any other cleaner. You can't use DIY Cleaners until you accept.</p>
+  <div style="display:flex;gap:8px"><button class="btn primary" style="flex:1" data-accept>OK, I accept</button><button class="btn" style="flex:1;justify-content:center" data-decline>Decline</button></div></div>`
+  :`<p class="small muted">You accepted these warnings on ${new Date(S.accepted).toLocaleDateString()}.</p>`}`;
 }
 function saved(){const rs=D.recipes.filter(r=>S.saved.includes(r.no));return `<h2 style="margin-top:6px">Saved recipes</h2>${rs.map(r=>card(r)).join("")||`<p class="muted">Tap ♡ on a recipe to keep it here.</p>`}`}
-function menu(){return `<h2 style="margin-top:6px">Menu</h2>
-  <div class="card"><button class="rc" data-tab="help"><div class="emo">❓</div><div class="t"><b>Help</b><span class="muted small">How each part of the app works</span></div><span class="muted">›</span></button></div>
-  <div class="card"><button class="rc" data-tab="about"><div class="emo">ℹ️</div><div class="t"><b>About</b><span class="muted small">Version ${VERSION}, recipe sources and what's new</span></div><span class="muted">›</span></button></div>`}
-function help(){return `<button class="back" data-tab="menu">‹ Menu</button><h2 style="margin-top:4px">Help</h2>`+
-  HELP.map(([e,t,a],i)=>`<details class="help" name="help" ${i===0?"open":""}><summary>${e} ${t}</summary><p class="small">${a}</p></details>`).join("")}
+const row=(icon,title,sub,attr)=>`<div class="card"><${attr.startsWith("href")?"a":"button"} class="rc" ${attr} style="text-decoration:none"><div class="emo">${ic(icon)}</div><div class="t"><b>${title}</b><span class="muted small">${sub}</span></div><span class="muted">›</span></${attr.startsWith("href")?"a":"button"}></div>`;
+function settings(){return `<h2 style="margin-top:6px">Settings</h2>
+  <h2 style="font-size:.9rem;margin-top:12px" class="muted">COLOR THEME</h2>
+  <div class="themes" id="themes"><div class="bub"></div>${THEMES.map(t=>`<button class="th${t.id===S.theme?" on":""}" data-theme="${t.id}"><span class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join("")}</span><b>${t.name}</b><span class="muted small" style="margin-top:-4px">${t.mode==="dark"?"Dark":"Light"}</span></button>`).join("")}</div>
+  <h2 style="font-size:.9rem;margin-top:18px" class="muted">MORE</h2>
+  ${row("help","Help","How each part of the app works",'data-tab="help"')}
+  ${row("nevermix","Report a problem","Opens a pre-filled report on GitHub",`href="${report()}" target="_blank" rel="noopener"`)}
+  ${row("safety","Safety warnings","Read the never-mix chart again",'data-tab="safety"')}
+  ${row("about","About",`Version ${VERSION}, recipe sources and what's new`,'data-tab="about"')}`}
+function help(){return `<button class="back" data-tab="settings">‹ Settings</button><h2 style="margin-top:4px">Help</h2>`+
+  HELP.map(([e,t,a],i)=>`<details class="help" name="help" ${i===0?"open":""}><summary><span class="hi">${ic(e)}</span>${t}</summary><p class="small">${a}</p></details>`).join("")}
 function about(){const m=D.merge,cnt=g=>D.recipes.filter(r=>r.germ===g).length;
-  return `<button class="back" data-tab="menu">‹ Menu</button>
-  <div style="text-align:center;margin:10px 0 14px"><div class="logo" style="width:72px;height:72px;margin:0 auto;border-radius:20px;background:var(--glow);display:grid;place-items:center;font-size:2.2rem;box-shadow:0 10px 34px rgba(124,77,255,.5)">🧴</div>
+  return `<button class="back" data-tab="settings">‹ Settings</button>
+  <div style="text-align:center;margin:10px 0 14px"><div style="width:76px;height:76px;margin:0 auto;filter:drop-shadow(0 10px 30px rgba(124,77,255,.45))">${ic("logo")}</div>
   <h2 class="glowtext" style="font-size:1.5rem;margin:12px 0 2px">DIY Cleaners</h2><div class="muted small">Safe cleaners you mix at home</div></div>
   <div class="stats"><div class="stat"><span class="muted small">Version</span><b>${VERSION}</b></div><div class="stat"><span class="muted small">Build</span><b>${BUILD}</b></div></div>
   <h2>Recipes · ${D.recipes.length}</h2>
@@ -183,27 +256,73 @@ function about(){const m=D.merge,cnt=g=>D.recipes.filter(r=>r.germ===g).length;
   <h2>What's new</h2>${CHANGES.map(([v,t],i)=>`<div class="card small"><span class="badge ${i?"g-cleans":"g-disinfects"}" style="margin:0 8px 0 0">${v}</span>${t}</div>`).join("")}
   <h2>Privacy</h2><p class="small">Everything you save stays in this browser on this device. Nothing is sent anywhere.</p>
   <p class="small muted">Homemade cleaners aren't lab-tested. This app is general household information, not medical, veterinary or professional advice. Follow product labels and manufacturer instructions.</p>
-  <p class="small muted" style="text-align:center">Version ${VERSION} · Build ${BUILD} · <a href="https://github.com/MichaelGaylan/DIY-cleaners" target="_blank" rel="noopener">Source on GitHub</a></p>`}
+  <p class="small muted" style="text-align:center">Version ${VERSION} · Build ${BUILD} · <a href="${REPO}" target="_blank" rel="noopener">Source on GitHub</a></p>`}
+/* Overlays: safety gate (MAKE-013) and ammonia warning (MAKE-017) */
+function overlay(){const o=$("#ov");let h="";
+  if(gate==="popup")h=`<div class="box"><div class="bi">${ic("safety")}</div><h2>Before you start</h2>
+   <p>Mixing some household chemicals can release gases that are <b>life threatening</b>. Before you use DIY Cleaners, you need to read the safety warnings about these chemicals and how they react.</p>
+   <p class="small muted">Tap OK to open the Safety page. At the bottom, tap Accept to start using the app.</p><div class="acts"><button class="btn primary" data-gate-ok>OK</button></div></div>`;
+  else if(gate==="declined")h=`<div class="box"><div class="bi">${ic("nevermix")}</div><h2>DIY Cleaners is locked</h2>
+   <p>You declined the safety warning, so the app can't be used. Mixing the wrong chemicals can be life threatening, and every recipe depends on knowing which ones never go together.</p>
+   <p class="small muted">You can close this tab now, or read the warning again.</p><div class="acts"><button class="btn primary" data-gate-again>Show the warning again</button></div></div>`;
+  else if(amm)h=`<div class="box"><div class="bi">${ic("nevermix")}</div><h2>Ammonia: extra caution</h2>
+   <p><b>Never mix ammonia with bleach</b> or anything that contains bleach. Together they make chloramine gas, which can cause coughing, chest pain and lung damage.</p>
+   <ul class="small"><li>Some glass cleaners contain ammonia, and so does urine. Never use bleach on pet urine or right after an ammonia cleaner.</li>
+   <li>Use one product at a time, with windows open. Wear gloves.</li><li>Store ammonia away from bleach, and never in a food or drink bottle.</li>
+   <li>None of the recipes in this app use ammonia, so ticking it won't unlock any recipes.</li></ul>
+   <div class="acts"><button class="btn primary" data-amm="yes">I understand, add ammonia</button><button class="btn" style="justify-content:center" data-amm="no">Cancel</button></div></div>`;
+  o.innerHTML=h;o.hidden=!h;document.body.classList.toggle("locked",!!gate);document.body.style.overflow=h?"hidden":"";
+  if(h){const b=o.querySelector(".btn");b&&b.focus()}}
+let amm=false;
+/* Liquid glass bubbles (MAKE-011): stretch toward the target, then spring into place */
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+function slide(bub,target,box){if(!bub||!target)return;const p=box.getBoundingClientRect(),t=target.getBoundingClientRect();
+  const n={l:t.left-p.left,t:t.top-p.top,w:t.width,h:t.height},o=bub._p;bub._p=n;
+  Object.assign(bub.style,{left:n.l+"px",top:n.t+"px",width:n.w+"px",height:n.h+"px"});
+  if(!o||RM.matches||(o.l===n.l&&o.t===n.t))return;
+  const sl=Math.min(o.l,n.l),st=Math.min(o.t,n.t),sw=Math.max(o.l+o.w,n.l+n.w)-sl,sh=Math.max(o.t+o.h,n.t+n.h)-st;
+  bub.animate([{left:o.l+"px",top:o.t+"px",width:o.w+"px",height:o.h+"px"},{left:sl+"px",top:st+"px",width:sw+"px",height:sh+"px",offset:.35,easing:"cubic-bezier(.34,1.56,.64,1)"},{left:n.l+"px",top:n.t+"px",width:n.w+"px",height:n.h+"px"}],{duration:560,easing:"ease-out"})}
+function bubbles(){slide($("nav .bub"),$("nav button.on"),$("nav .in"));if(!$("nav button.on"))$("nav .bub").style.opacity=0;else $("nav .bub").style.opacity=1;
+  const th=$("#themes");if(th)slide(th.querySelector(".bub"),th.querySelector(".th.on"),th)}
+function drop(el,e){if(RM.matches||!el.animate)return;const r=el.getBoundingClientRect(),d=document.createElement("span"),s=Math.max(r.width,r.height)*2.2;
+  d.className="drop";Object.assign(d.style,{left:(e.clientX-r.left)+"px",top:(e.clientY-r.top)+"px",width:s+"px",height:s+"px"});el.appendChild(d);
+  d.animate([{transform:"translate(-50%,-50%) scale(0)",opacity:.9},{transform:"translate(-50%,-50%) scale(1)",opacity:0}],{duration:420,easing:"ease-out"}).onfinish=()=>d.remove()}
 function draw(){
   if(!D)return;const r=open&&D.recipes.find(x=>x.no===open);
-  $("#app").innerHTML=r?detail(r):tab==="pantry"?pantry():tab==="safety"?safety():tab==="saved"?saved():tab==="menu"?menu():tab==="help"?help():tab==="about"?about():list();
+  $("#app").innerHTML=r?detail(r):tab==="pantry"?pantry():tab==="safety"?safety():tab==="saved"?saved():tab==="settings"?settings():tab==="help"?help():tab==="about"?about():list();
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",!open&&b.dataset.tab===tab));
   const qi=$("#q");if(qi)qi.oninput=e=>{q=e.target.value;limit=60;$("#list").innerHTML=listHTML()};
   document.querySelectorAll("details.help").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)document.querySelectorAll("details.help").forEach(o=>{if(o!==d)o.open=false})}));
+  bubbles();overlay();
 }
 function go(hash){history.pushState({},"",hash);fromHash();scrollTo(0,0)}
 document.addEventListener("click",e=>{
-  const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-back],[data-fav],[data-more]");if(!k)return;const d=k.dataset;
+  const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-pc],[data-back],[data-fav],[data-more],[data-theme],[data-gate-ok],[data-gate-again],[data-accept],[data-decline],[data-amm]");if(!k)return;const d=k.dataset;
+  if(d.gateOk!==undefined){gate="safety";go("#safety");return}
+  if(d.gateAgain!==undefined){gate="popup";overlay();return}
+  if(d.accept!==undefined){S.accepted=new Date().toISOString();save();gate=null;go("#recipes");return}
+  if(d.decline!==undefined){gate="declined";overlay();return}
+  if(d.amm){amm=false;if(d.amm==="yes"){S.have=[...new Set([...S.have,"ammonia"])];save();draw()}else overlay();return}
+  if(gate&&!d.open&&d.tab!=="safety"&&d.back===undefined)return;
   if(d.open){go("#"+pad(d.open));return}
-  if(d.tab){e.preventDefault();if(d.tab==="recipes"&&tab==="recipes"&&!open){cat=null;q=""}go("#"+d.tab);return}
-  if(d.cat!==undefined){cat=d.cat||null;q="";limit=60;draw();scrollTo(0,0);return}
+  if(d.tab){e.preventDefault();if(d.tab==="recipes"&&tab==="recipes"&&!open){cat=null;q=""}if(d.tab==="pantry")pc=null;go("#"+d.tab);return}
+  if(d.cat!==undefined){if(d.cat)drop(k,e);cat=d.cat||null;q="";limit=60;setTimeout(()=>{draw();scrollTo(0,0)},d.cat?140:0);return}
+  if(d.pc!==undefined){if(d.pc)drop(k,e);pc=d.pc||null;setTimeout(()=>{draw();scrollTo(0,0)},d.pc?140:0);return}
   if(d.more!==undefined){limit+=60;$("#list").innerHTML=listHTML();return}
   if(d.back!==undefined){go("#"+tab);return}
+  if(d.theme){S.theme=d.theme;save();applyTheme();document.querySelectorAll(".th").forEach(b=>b.classList.toggle("on",b.dataset.theme===S.theme));bubbles();return}
   if(d.fav){const n=+d.fav;S.saved=S.saved.includes(n)?S.saved.filter(x=>x!==n):[...S.saved,n];save();draw()}
 });
-document.addEventListener("change",e=>{const h=e.target.dataset.have;if(!h)return;S.have=e.target.checked?[...new Set([...S.have,h])]:S.have.filter(x=>x!==h);save();draw()});
-function fromHash(){const h=location.hash.slice(1);if(/^\d{3}$/.test(h)){open=+h}else{open=null;if(["recipes","pantry","safety","saved","menu","help","about"].includes(h))tab=h;else if(!h)tab="recipes"}draw()}
-addEventListener("popstate",fromHash);
+document.addEventListener("change",e=>{const h=e.target.dataset.have;if(!h)return;
+  if(h==="ammonia"&&e.target.checked){e.target.checked=false;amm=true;overlay();return}
+  S.have=e.target.checked?[...new Set([...S.have,h])]:S.have.filter(x=>x!==h);save();draw()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&amm){amm=false;overlay()}});
+const TABS=["recipes","pantry","safety","saved","settings","help","about"];
+function fromHash(){let h=location.hash.slice(1);if(h==="menu")h="settings";
+  if(gate==="safety"&&h!=="safety"){history.replaceState({},"","#safety");h="safety"}
+  if(/^\d{3}$/.test(h)){open=+h}else{open=null;if(TABS.includes(h))tab=h;else if(!h)tab="recipes"}draw()}
+addEventListener("popstate",fromHash);addEventListener("resize",()=>{document.querySelectorAll(".bub").forEach(b=>b._p=null);bubbles()});
+applyTheme();hydrate();overlay();
 fetch("data/recipes.json").then(r=>r.json()).then(j=>{D=j;
   D.recipes.forEach(r=>{r.needs=PANTRY.filter(([k,,re])=>r.ing.some(i=>!/optional/i.test(i)&&re.test(i.toLowerCase()))).map(p=>p[0])});
   S.saved=(S.saved||[]).filter(x=>typeof x==="number");fromHash()}).catch(()=>{$("#app").innerHTML=`<p>Couldn't load recipes. Check your connection and reload.</p>`});
