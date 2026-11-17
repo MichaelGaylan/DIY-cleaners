@@ -41,6 +41,10 @@ ol,ul{padding-left:22px;margin:6px 0}li{margin:4px 0}
 .btn{border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:14px;padding:11px 14px;font:inherit;cursor:pointer}
 .btn.primary{background:var(--act);border-color:transparent;font-weight:600}
 .wide{width:100%}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.catcard{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;padding:14px;border-radius:var(--r);border:1px solid var(--line);background:var(--glass);color:var(--ink);font:inherit;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.catcard .ce{font-size:1.6rem;width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:var(--glass2);margin-bottom:4px}
+.catcard b{font-size:.95rem;line-height:1.25}
 table{width:100%;border-collapse:collapse;font-size:.84rem}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600}
 .mix{display:flex;gap:10px}
 .pantry{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
@@ -71,8 +75,8 @@ details.help p{margin:8px 0 2px;line-height:1.5}
 </nav>
 <script>
 /* Release info: bump VERSION per release and BUILD per published build (Build Directive) */
-const VERSION="1.1.0",BUILD="2026.11.17-1";
-const CHANGES=[["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
+const VERSION="1.1.1",BUILD="2026.11.17-2";
+const CHANGES=[["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
 const GERM={disinfects:["DISINFECT","Kills most germs when made and used exactly as written: a public-health bleach dilution with its full wet contact time, on a surface you cleaned first."],
  sanitizes:["SANITIZE","Reduces germs to safe levels using a published public-health method (bleach dilution, boiling, or a hot wash and dry)."],
  cleans:["CLEANS ONLY","Removes dirt, grease and odor. It makes no germ-kill claim. When someone is sick, follow with a recipe marked Sanitize or Disinfect."],
@@ -93,7 +97,7 @@ const SOURCES=[["CDC: Cleaning and disinfecting with bleach","https://www.cdc.go
  ["EPA: Six steps for safe disinfectant use","https://www.epa.gov/coronavirus/six-steps-safe-effective-disinfectant-use"],["EPA: Household substances","https://www.epa.gov/coronavirus-and-disinfectants/can-i-use-common-household-substances-kill-novel-coronavirus"],
  ["USDA: Clean, then sanitize","https://www.usda.gov/media/blog/2019/08/27/clean-then-sanitize-one-two-punch-stop-foodborne-illness-kitchen"],["ASPCA: Poisonous household products","https://www.aspca.org/pet-care/aspca-poison-control/poisonous-household-products"],
  ["U. of Illinois Extension: Clean and sanitize the kitchen","https://extension.illinois.edu/food/cleaning-kitchen"],["Virginia Tech Extension: Hand sanitizers","https://pubs.ext.vt.edu/FST/FST-407/FST-407.html"]];
-const HELP=[["🔎","Finding a recipe","Type in the search box (a surface, a stain, an ingredient or a number like 112), or tap a category chip to narrow the list. Tap a recipe to open it."],
+const HELP=[["🔎","Finding a recipe","Pick a category (Kitchen, Bathroom, Glass and mirrors and so on) to see its recipes, or type in the search box: a surface, a stain, an ingredient or a number like 112. Tap a recipe to open it."],
  ["🏷️","What the labels mean","CLEANS ONLY removes dirt, grease and odor, with no germ-kill claim. SANITIZE reduces germs to safe levels using a published public-health method. DISINFECT kills most germs when made exactly as written. Clean first, then sanitize or disinfect."],
  ["📖","Reading a recipe","Each recipe lists ingredients with amounts, how to prepare it, how to apply it, its limits (surfaces and materials to avoid), and storage. Read the limits before you start, and test a hidden spot."],
  ["🧺","What can I make?","Tick what's in your cupboard. Water is always assumed. You'll see what you can mix now, and what needs just one more item."],
@@ -103,19 +107,22 @@ const HELP=[["🔎","Finding a recipe","Type in the search box (a surface, a sta
  ["💾","Your data","Saved recipes and your cupboard list stay in this browser on this device. Nothing is sent anywhere."]];
 const KEY="diy-cleaning-v1";let S={saved:[],have:[]};try{Object.assign(S,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-let D=null,tab="recipes",cat="all",q="",open=null,limit=60;
+let D=null,tab="recipes",cat=null,q="",open=null,limit=60;
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pad=n=>String(n).padStart(3,"0"),catOf=id=>D.categories.find(c=>c.id===id);
 const badge=r=>`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`;
 const card=(r,extra="")=>`<div class="card"><button class="rc" data-open="${r.no}"><div class="emo">${catOf(r.cat).emo}</div><div class="t"><b>${esc(r.name)}</b><span class="muted small">#${pad(r.no)} · ${catOf(r.cat).name}</span>${extra}<br>${badge(r)}</div><span class="muted">›</span></button></div>`;
 const hay=r=>(r._h=r._h||[pad(r.no),String(r.no),r.name,r.apply,...r.ing].join(" ").toLowerCase());
-function matches(){const t=q.trim().toLowerCase();return D.recipes.filter(r=>(cat==="all"||r.cat===cat)&&(!t||t.split(/\s+/).every(w=>hay(r).includes(w))))}
-function listHTML(){const rs=matches();return (rs.slice(0,limit).map(r=>card(r)).join("")||`<p class="muted">No recipes match “${esc(q)}”.</p>`)+
+function matches(){const t=q.trim().toLowerCase();return D.recipes.filter(r=>(!cat||r.cat===cat)&&(!t||t.split(/\s+/).every(w=>hay(r).includes(w))))}
+function grid(){return `<div class="cats">${D.categories.map(c=>`<button class="catcard" data-cat="${c.id}"><span class="ce">${c.emo}</span><b>${c.name}</b><span class="muted small">${D.recipes.filter(r=>r.cat===c.id).length} recipes</span></button>`).join("")}</div>`}
+function listHTML(){if(!cat&&!q.trim())return grid();const rs=matches();return (rs.slice(0,limit).map(r=>card(r)).join("")||`<p class="muted">No recipes match “${esc(q)}”.</p>`)+
   (rs.length>limit?`<button class="btn wide" data-more>Show more (${rs.length-limit} left)</button>`:"")}
 function list(){
-  return `<input class="search" id="q" type="search" placeholder="Search ${D.recipes.length} recipes: grease, rust, pet urine…" value="${esc(q)}" aria-label="Search recipes">
-  <div class="chips">${[{id:"all",name:"All",emo:"✨"},...D.categories].map(c=>`<button class="chip ${cat===c.id?"on":""}" data-cat="${c.id}">${c.emo} ${c.name}</button>`).join("")}</div>
-  <div id="list">${listHTML()}</div>`;
+  const c=cat&&catOf(cat);
+  return (c?`<button class="back" data-cat="">‹ Categories</button><h2 style="margin:2px 0 10px">${c.emo} ${c.name} <span class="muted small">· ${D.recipes.filter(r=>r.cat===cat).length}</span></h2>`
+   :`<div class="note danger small"><b>Never mix bleach with vinegar,</b> ammonia, alcohol, peroxide or any other cleaner. Bleach mixes only with water. <a href="#safety" data-tab="safety">Never-mix chart</a></div>`)+
+  `<input class="search" id="q" type="search" placeholder="${c?`Search ${c.name}`:`Search all ${D.recipes.length} recipes`}" value="${esc(q)}" aria-label="Search recipes">
+  <div id="list" style="margin-top:10px">${listHTML()}</div>`;
 }
 function detail(r){
   const c=catOf(r.cat),fav=S.saved.includes(r.no);
@@ -188,8 +195,8 @@ function go(hash){history.pushState({},"",hash);fromHash();scrollTo(0,0)}
 document.addEventListener("click",e=>{
   const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-back],[data-fav],[data-more]");if(!k)return;const d=k.dataset;
   if(d.open){go("#"+pad(d.open));return}
-  if(d.tab){e.preventDefault();go("#"+d.tab);return}
-  if(d.cat){cat=d.cat;limit=60;draw();return}
+  if(d.tab){e.preventDefault();if(d.tab==="recipes"&&tab==="recipes"&&!open){cat=null;q=""}go("#"+d.tab);return}
+  if(d.cat!==undefined){cat=d.cat||null;q="";limit=60;draw();scrollTo(0,0);return}
   if(d.more!==undefined){limit+=60;$("#list").innerHTML=listHTML();return}
   if(d.back!==undefined){go("#"+tab);return}
   if(d.fav){const n=+d.fav;S.saved=S.saved.includes(n)?S.saved.filter(x=>x!==n):[...S.saved,n];save();draw()}
