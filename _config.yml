@@ -1,0 +1,10 @@
+# Publish only the app. The readable source (src/) and the decoder map
+# (src/decoder-map.json) stay in the GitHub repo but are never copied to the
+# live site. Build scripts, docs and design references are excluded too.
+exclude:
+  - src
+  - design
+  - README.md
+  - TODO.md
+  - "*.py"
+  - "*.map"

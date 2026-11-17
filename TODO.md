@@ -3,14 +3,20 @@
 ## 🔴 Needs you
 
 ## 🔵 Build list
-- [ ] MAKE-018 · "Put DIY Cleaners on your Home Screen" banner (DIY Cleaners name and app icon, not VYBEON Make): no app store needed; iPhone: Share, then Add to Home Screen; Android: ⋮, then Install app; dismissible with ✕, hidden once installed (reference: design/home-screen-banner-reference.png) · UI · S · added 2026-11-17
-- [ ] MAKE-019 · Hero header under the title bar: "Make it yourself" with "Everyday products, with ingredients you can say out loud." (reference: design/hero-header-reference.png) · UI · S · added 2026-11-17
-- [ ] MAKE-020 · Print button at the bottom of each recipe, or wherever it fits best (today's Print label button sits mid-page, under the recipe card) · UI · S · added 2026-11-17
-- [ ] MAKE-021 · Costs and savings: give every pantry ingredient a typical US cost, show each recipe's cost per batch next to the store-bought product it replaces, plus a "Saved by making it yourself" running total card (tap "I made this" to count a batch) (reference: design/savings-card-reference.png) · Feature · L · added 2026-11-17
+(empty)
 
 ## 🟡 Hold
 
 ## 🟣 Done
+### 1.3.0 · build 2026.11.17-4
+- [x] MAKE-018 · "Put DIY Cleaners on your Home Screen" banner (DIY Cleaners name and app icon, not VYBEON Make): no app store needed; iPhone: Share, then Add to Home Screen; Android: ⋮, then Install app; dismissible with ✕, hidden once installed (reference: design/home-screen-banner-reference.png) · UI · S · added 2026-11-17
+- [x] MAKE-019 · Hero header under the title bar: "Make it yourself" with "Everyday products, with ingredients you can say out loud." (reference: design/hero-header-reference.png) · UI · S · added 2026-11-17
+- [x] MAKE-020 · Print button at the bottom of each recipe, or wherever it fits best (today's Print label button sits mid-page, under the recipe card) · UI · S · added 2026-11-17
+- [x] MAKE-021 · Costs and savings: give every pantry ingredient a typical US cost, show each recipe's cost per batch next to the store-bought product it replaces, plus a "Saved by making it yourself" running total card (tap "I made this" to count a batch) (reference: design/savings-card-reference.png) · Feature · L · added 2026-11-17
+- [x] MAKE-022 · Scramble (minify/obfuscate) the published app code so the live site is unreadable, while the source in GitHub stays readable · Build · M · added 2026-11-17
+- [x] MAKE-023 · Keep a private decoder map (readable source + mapping) only in the GitHub repo, excluded from the live site · Build · S · added 2026-11-17
+- [x] MAKE-024 · Copyright notice in the app (About and footer) and in the source code · Content · S · added 2026-11-17
+
 ### 1.2.0 · build 2026.11.17-3
 - [x] MAKE-008 · Create a proper app icon (Home Screen and favicon) in VYBEON style · UI · S · added 2026-11-17
 - [x] MAKE-009 · Color theme switcher using the 7 VYBEON ONE swatches (source: design/vybeon-theme-swatches.pdf): Blush #D8DEDA #F7E4DA #F5CAD3 #E7AEB5 #957F86; Midnight #111520 #212C45 #465B75 #788AA8 #EBE7D8; Mocha #E8DED6 #E1CCB4 #D7B795 #A7886C #7A573D #93674A; Coastal #F0A9A0 #F8F0DF #C5EEE4 #B6D7DE #5D636F; Rosewood #F3DBC0 #F0A9AE #C96A7C #963F5F #3F1020; Forest #D9D6D0 #A5B08C #62805C #405842 #384C42; Linen #ECEDE9 #D5CCC3 #F2E9E0 #DFD4CA #D1BCAE · UI · M · added 2026-11-17
@@ -40,4 +46,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-022
+Next free ID: MAKE-025

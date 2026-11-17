@@ -12,6 +12,9 @@ A small web app for making safe, low-waste household cleaners at home.
 - Title bar with Help and a Settings gear: 8 color themes (VYBEON plus the 7 VYBEON ONE swatches), Report a problem, Help, About
 - VYBEON style: glass cards, icon tiles (glow tile on dark themes, light chip on light themes), liquid glass tab bar
 
+## Build and source
+The live site serves a packed `index.html` (the app `<script>` is base64-packed and the CSS is minified), so the published code isn't readable at a glance. The readable source of truth is `src/index.html`, and `src/decoder-map.json` explains the packing. Both live in this repo but are kept off the published site by `_config.yml` (Jekyll `exclude`). To change the app, edit `src/index.html`, then repack to the root `index.html`.
+
 ## Run it
 Static site. Open `index.html` through any static server, or publish with GitHub Pages (Settings → Pages → main, / root).
 
@@ -22,3 +25,6 @@ Static site. Open `index.html` through any static server, or publish with GitHub
 - `manifest.webmanifest`, `sw.js`, `icon*`: Home Screen install and offline use
 
 Homemade cleaners aren't lab-tested. Spot-test, label everything, and keep it out of reach of children and pets.
+
+---
+© 2026 Michael Gaylan (VYBEON). All rights reserved.
