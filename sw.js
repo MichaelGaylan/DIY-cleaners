@@ -1,5 +1,5 @@
 // Offline support: newest files when online, saved copy when offline. Bump CACHE each release.
-const CACHE = "diy-cleaning-v1";
+const CACHE = "diy-cleaners-v2";
 const FILES = ["./", "index.html", "data/recipes.json", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== CACHE).map(x => caches.delete(x))))); self.clients.claim(); });
