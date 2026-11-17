@@ -8,6 +8,10 @@
 - [ ] MAKE-010 · Link for reporting problems (from a recipe and the ☰ menu) · UI · S · added 2026-11-17
 - [ ] MAKE-011 · Liquid glass buttons: a bubble stretches across and springs into place where it applies (nav tabs, category picks) · UI · M · added 2026-11-17
 - [ ] MAKE-012 · Replace Kitchen, Pets and Bugs category icons with picks K2 fork and knife, P1 paw print, B2 beetle; glow tile on dark swatches, light chip on light swatches (glyphs and tile rules: design/category-icons.py, preview: design/category-icon-options.html) · UI · S · added 2026-11-17
+- [ ] MAKE-013 · Safety gate on first open: one-time popup ("mixing chemicals can be life threatening") with OK that opens Safety; Safety ends with Accept / Decline; the app stays locked until Accept, and Decline loops back to the warning · Safety · M · added 2026-11-17
+- [ ] MAKE-014 · What can I make? groups the makeable recipes by category, with a recipe count on each category tile like the Recipes page · UI · S · added 2026-11-17
+- [ ] MAKE-015 · New title bar with round icon buttons, including a gear that opens a new Settings page (reference: title-bar-reference.png) · UI · M · added 2026-11-17
+- [ ] MAKE-016 · Redo all remaining app icons in the agreed MAKE-012 style (glow tile on dark swatches, light chip on light) · UI · M · added 2026-11-17
 
 ## 🟡 Hold
 
@@ -29,4 +33,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-013
+Next free ID: MAKE-017
