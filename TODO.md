@@ -6,9 +6,9 @@
 - [ ] MAKE-018 · "Put DIY Cleaners on your Home Screen" banner (DIY Cleaners name and app icon, not VYBEON Make): no app store needed; iPhone: Share, then Add to Home Screen; Android: ⋮, then Install app; dismissible with ✕, hidden once installed (reference: design/home-screen-banner-reference.png) · UI · S · added 2026-11-17
 - [ ] MAKE-019 · Hero header under the title bar: "Make it yourself" with "Everyday products, with ingredients you can say out loud." (reference: design/hero-header-reference.png) · UI · S · added 2026-11-17
 - [ ] MAKE-020 · Print button at the bottom of each recipe, or wherever it fits best (today's Print label button sits mid-page, under the recipe card) · UI · S · added 2026-11-17
+- [ ] MAKE-021 · Costs and savings: give every pantry ingredient a typical US cost, show each recipe's cost per batch next to the store-bought product it replaces, plus a "Saved by making it yourself" running total card (tap "I made this" to count a batch) (reference: design/savings-card-reference.png) · Feature · L · added 2026-11-17
 
 ## 🟡 Hold
-- [ ] MAKE-021 · Costs and savings: give every pantry ingredient a typical US cost, show each recipe's cost per batch next to the store-bought product it replaces, plus a "Saved by making it yourself" running total card (tap "I made this" to count a batch) (reference: design/savings-card-reference.png) · Feature · L · added 2026-11-17
 
 ## 🟣 Done
 ### 1.2.0 · build 2026.11.17-3
