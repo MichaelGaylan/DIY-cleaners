@@ -4,6 +4,8 @@
 
 ## 🔵 Build list
 - [ ] MAKE-018 · "Put DIY Cleaners on your Home Screen" banner (DIY Cleaners name and app icon, not VYBEON Make): no app store needed; iPhone: Share, then Add to Home Screen; Android: ⋮, then Install app; dismissible with ✕, hidden once installed (reference: design/home-screen-banner-reference.png) · UI · S · added 2026-11-17
+- [ ] MAKE-019 · Hero header under the title bar: "Make it yourself" with "Everyday products, with ingredients you can say out loud." (reference: design/hero-header-reference.png) · UI · S · added 2026-11-17
+- [ ] MAKE-020 · Print button at the bottom of each recipe, or wherever it fits best (today's Print label button sits mid-page, under the recipe card) · UI · S · added 2026-11-17
 
 ## 🟡 Hold
 
@@ -37,4 +39,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-019
+Next free ID: MAKE-021
