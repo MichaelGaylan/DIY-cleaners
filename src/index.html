@@ -123,8 +123,8 @@ details.help p{margin:8px 0 2px;line-height:1.5}
 <div id="ov" hidden role="dialog" aria-modal="true"></div>
 <script>
 /* Release info: bump VERSION per release and BUILD per published build (Build Directive) */
-const VERSION="1.3.1",BUILD="2026.11.18-1";
-const CHANGES=[["1.3.1","Report a problem now opens a pre-filled email to VYBEON_ORG@proton.me instead of GitHub"],["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
+const VERSION="1.3.2",BUILD="2026.11.18-2";
+const CHANGES=[["1.3.2","Report a problem email now uses the subject \"Cleaners\""],["1.3.1","Report a problem now opens a pre-filled email to VYBEON_ORG@proton.me instead of GitHub"],["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
 const GERM={disinfects:["DISINFECT","Kills most germs when made and used exactly as written: a public-health bleach dilution with its full wet contact time, on a surface you cleaned first."],
  sanitizes:["SANITIZE","Reduces germs to safe levels using a published public-health method (bleach dilution, boiling, or a hot wash and dry)."],
  cleans:["CLEANS ONLY","Removes dirt, grease and odor. It makes no germ-kill claim. When someone is sick, follow with a recipe marked Sanitize or Disinfect."],
@@ -176,7 +176,7 @@ const ic=(k,r)=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" focusabl
 const hydrate=(root=document)=>root.querySelectorAll("[data-ic]").forEach(e=>e.innerHTML=ic(e.dataset.ic,e.dataset.r));
 const REPO="https://github.com/MichaelGaylan/DIY-cleaners";
 const REPORT_EMAIL="VYBEON_ORG@proton.me";
-const report=r=>`mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(r?`DIY Cleaners problem: #${pad(r.no)} ${r.name}`:"DIY Cleaners problem report")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
+const report=r=>`mailto:${REPORT_EMAIL}?subject=${encodeURIComponent("Cleaners")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
 function applyTheme(){const t=THEMES.find(x=>x.id===S.theme)||THEMES[0],el=document.documentElement;
   Object.entries(t.v).forEach(([k,v])=>el.style.setProperty("--"+k,v));el.dataset.mode=t.mode;document.querySelector('meta[name="theme-color"]').content=t.v.bg}
 const badge=r=>`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`;

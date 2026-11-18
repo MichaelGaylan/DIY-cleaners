@@ -8,6 +8,9 @@
 ## 🟡 Hold
 
 ## 🟣 Done
+### 1.3.2 · build 2026.11.18-2
+- [x] MAKE-026 · Report email subject line is exactly "Cleaners" · UI · S · added 2026-11-18
+
 ### 1.3.1 · build 2026.11.18-1
 - [x] MAKE-025 · "Report a problem" sends a pre-filled email to VYBEON_ORG@proton.me (mailto) instead of a GitHub issue · UI · S · added 2026-11-18
 
@@ -49,4 +52,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-026
+Next free ID: MAKE-027
