@@ -123,8 +123,8 @@ details.help p{margin:8px 0 2px;line-height:1.5}
 <div id="ov" hidden role="dialog" aria-modal="true"></div>
 <script>
 /* Release info: bump VERSION per release and BUILD per published build (Build Directive) */
-const VERSION="1.3.0",BUILD="2026.11.17-4";
-const CHANGES=[["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
+const VERSION="1.3.1",BUILD="2026.11.18-1";
+const CHANGES=[["1.3.1","Report a problem now opens a pre-filled email to VYBEON_ORG@proton.me instead of GitHub"],["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
 const GERM={disinfects:["DISINFECT","Kills most germs when made and used exactly as written: a public-health bleach dilution with its full wet contact time, on a surface you cleaned first."],
  sanitizes:["SANITIZE","Reduces germs to safe levels using a published public-health method (bleach dilution, boiling, or a hot wash and dry)."],
  cleans:["CLEANS ONLY","Removes dirt, grease and odor. It makes no germ-kill claim. When someone is sick, follow with a recipe marked Sanitize or Disinfect."],
@@ -162,7 +162,7 @@ const HELP=[["search","Finding a recipe","Pick a category (Kitchen, Bathroom, Gl
  ["safety","Safety","The first time you open the app you'll be asked to read the Safety page and accept it. Never mix bleach with anything but water. Use one product at a time and rinse between products. The Safety tab has the never-mix chart, bleach dilutions and emergency numbers."],
  ["saved","Saving and printing","Tap ♡ on a recipe to keep it in Saved. Use Print label to print the recipe for the bottle."],
  ["settings","Settings and color themes","Tap the gear at the top right. Pick one of 8 color themes: VYBEON or the 7 VYBEON ONE swatches. Icons switch to glow tiles on dark themes and light chips on light themes. Settings also has Report a problem and About."],
- ["nevermix","Reporting a problem","Use Report a problem in Settings, or the link at the bottom of any recipe. It opens a pre-filled report on GitHub (a free GitHub account is needed). Don't include personal details."],
+ ["nevermix","Reporting a problem","Use Report a problem in Settings, or the link at the bottom of any recipe. It opens a pre-filled email to VYBEON_ORG@proton.me from your mail app. Don't include personal details."],
  ["install","Install and offline","Add it to your Home Screen to open it like an app: in Safari tap Share, then Add to Home Screen; in Chrome tap ⋮, then Install app. After your first visit it works without a signal."],
  ["about","Costs and savings","Each recipe shows about what it costs to make and what the store-bought product it replaces costs for the same amount. Tap “I made this” to add the difference to the savings card on the Recipes page. Prices are typical US prices and only estimates. Reset savings is in Settings."],
  ["print","Printing a recipe","Open a recipe and tap Print this recipe at the bottom. Tape it to the bottle, or keep it with your supplies."],
@@ -175,7 +175,8 @@ const pad=n=>String(n).padStart(3,"0"),catOf=id=>D.categories.find(c=>c.id===id)
 const ic=(k,r)=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="t1" x="1" y="1" width="30" height="30" rx="${r?15:9}"/><rect class="t2" x="2.7" y="2.7" width="26.6" height="26.6" rx="${r?13.3:7.5}"/><g class="gl" transform="translate(6.4 6.4) scale(.8)">${IC[k]||""}</g></svg>`;
 const hydrate=(root=document)=>root.querySelectorAll("[data-ic]").forEach(e=>e.innerHTML=ic(e.dataset.ic,e.dataset.r));
 const REPO="https://github.com/MichaelGaylan/DIY-cleaners";
-const report=r=>`${REPO}/issues/new?title=${encodeURIComponent(r?`Problem with recipe #${pad(r.no)} ${r.name}`:"Problem in DIY Cleaners")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
+const REPORT_EMAIL="VYBEON_ORG@proton.me";
+const report=r=>`mailto:${REPORT_EMAIL}?subject=${encodeURIComponent(r?`DIY Cleaners problem: #${pad(r.no)} ${r.name}`:"DIY Cleaners problem report")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
 function applyTheme(){const t=THEMES.find(x=>x.id===S.theme)||THEMES[0],el=document.documentElement;
   Object.entries(t.v).forEach(([k,v])=>el.style.setProperty("--"+k,v));el.dataset.mode=t.mode;document.querySelector('meta[name="theme-color"]').content=t.v.bg}
 const badge=r=>`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`;
@@ -229,7 +230,7 @@ function detail(r){
   <div class="noprint" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn" data-tab="safety"><span class="bi">${ic("nevermix")}</span>Never-mix chart</button></div>
   <p class="small muted">${r.src==="book"?"From VYBEON Clean: 250 DIY Household Cleaning Recipes.":"From the DIY Cleaners recipe library."} Test a hidden spot first and label every container with contents and date.</p>
   <div class="printbar noprint"><button class="btn primary wide" onclick="window.print()"><span class="bi">${ic("print")}</span>Print this recipe</button>
-  <a class="small" style="text-align:center" href="${report(r)}" target="_blank" rel="noopener">Report a problem with this recipe</a></div>`;
+  <a class="small" style="text-align:center" href="${report(r)}">Report a problem with this recipe</a></div>`;
 }
 function pantry(){
   const have=new Set(S.have),ok=D.recipes.filter(r=>r.needs.length&&r.needs.every(n=>have.has(n))),near=D.recipes.filter(r=>!ok.includes(r)&&r.needs.filter(n=>!have.has(n)).length===1);
@@ -271,7 +272,7 @@ function settings(){return `<h2 style="margin-top:6px">Settings</h2>
   <div class="themes" id="themes"><div class="bub"></div>${THEMES.map(t=>`<button class="th${t.id===S.theme?" on":""}" data-theme="${t.id}"><span class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join("")}</span><b>${t.name}</b><span class="muted small" style="margin-top:-4px">${t.mode==="dark"?"Dark":"Light"}</span></button>`).join("")}</div>
   <h2 style="font-size:.9rem;margin-top:18px" class="muted">MORE</h2>
   ${row("help","Help","How each part of the app works",'data-tab="help"')}
-  ${row("nevermix","Report a problem","Opens a pre-filled report on GitHub",`href="${report()}" target="_blank" rel="noopener"`)}
+  ${row("nevermix","Report a problem","Opens a pre-filled email to VYBEON",`href="${report()}"`)}
   ${row("safety","Safety warnings","Read the never-mix chart again",'data-tab="safety"')}
   ${row("about","About",`Version ${VERSION}, recipe sources and what's new`,'data-tab="about"')}
   ${savingsCard()}<button class="btn wide" style="justify-content:center" data-reset>${resetArm?"Tap again to reset savings to $0.00":"Reset savings"}</button>

@@ -3,8 +3,8 @@
   "live_file": "index.html",
   "readable_source": "src/index.html",
   "packing": "The app <script> body is the readable source's <script> body, UTF-8 then base64, stored as window.__A and run with indirect eval. CSS is whitespace-minified; HTML is unchanged.",
-  "decode": "atob(__A) -> UTF-8 bytes -> text  (e.g. Python: base64.b64decode(__A).decode('utf-8'))",
-  "source_sha256": "ed8df5728d7ccfce819cb4e30e0cbe4aa3a1cf505867e4d107a3ec552ab17739",
-  "version": "1.3.0",
-  "build": "2026.11.17-4"
+  "decode": "atob(__A) -> UTF-8 bytes -> text  (Python: base64.b64decode(__A).decode('utf-8'))",
+  "source_sha256": "3f58f7ca5a1ebee0a1b7819f28726f75a6ca3b58b7654037966b3d53eed93d3a",
+  "version": "1.3.1",
+  "build": "2026.11.18-1"
 }
