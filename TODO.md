@@ -1,7 +1,6 @@
 # DIY Cleaners — Build list
 
 ## 🔴 Needs you
-- [ ] MAKE-028 · Create a Web3Forms access key for DIY Cleaners so reports have their own key (now it reuses VYBEON Make's key). Steps: 1) go to web3forms.com, 2) enter the DIY Cleaners report inbox address (the VYBEON inbox), 3) check that inbox and click the Web3Forms confirmation link, 4) copy the Access Key it shows, 5) send me just that key here and I'll swap it in. The key is public by design; don't send the inbox address. · Build · S · added 2026-11-18
 
 ## 🔵 Build list
 (empty)
@@ -9,6 +8,9 @@
 ## 🟡 Hold
 
 ## 🟣 Done
+### 1.4.1 · build 2026.11.18-4
+- [x] MAKE-028 · Dedicated DIY Cleaners Web3Forms key swapped in (was reusing VYBEON Make's) · Build · S · added 2026-11-18
+
 ### 1.4.0 · build 2026.11.18-3
 - [x] MAKE-027 · Report a problem sends in-app via Web3Forms straight to the VYBEON inbox (success:true before "Sent", Copy report text + clipboard fallback, subject prefix "Cleaners —", problem type kept after it); inbox address removed from the app and repo · Feature · M · added 2026-11-18
 
