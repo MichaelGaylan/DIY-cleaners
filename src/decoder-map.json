@@ -4,7 +4,7 @@
   "readable_source": "src/index.html",
   "packing": "The app <script> body is the readable source's <script> body, UTF-8 then base64, stored as window.__A and run with indirect eval. CSS is whitespace-minified; HTML is unchanged.",
   "decode": "atob(__A) -> UTF-8 bytes -> text  (Python: base64.b64decode(__A).decode('utf-8'))",
-  "source_sha256": "c3340461014b2b522449ba26479fac9c56be9ccdd939953309075e06fcf3cf61",
-  "version": "1.3.2",
-  "build": "2026.11.18-2"
+  "source_sha256": "1421c7c78e3110ab4522872445ccf47ea11dd2fa523834f82506fc2a60aef4e8",
+  "version": "1.4.0",
+  "build": "2026.11.18-3"
 }

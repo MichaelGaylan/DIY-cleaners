@@ -102,6 +102,11 @@ details.help p{margin:8px 0 2px;line-height:1.5}
 .cost .big{font-size:1.15rem;font-weight:800}.cost .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.cost .grid div{background:var(--glass2);border-radius:12px;padding:8px 10px}
 .price{display:block;font-size:.72rem;color:var(--muted)}
 .printbar{display:flex;flex-direction:column;gap:8px;margin:14px 0 6px}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.chips2{display:flex;flex-wrap:wrap;gap:8px}
+.chip2{border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:999px;padding:8px 13px;font:inherit;font-size:.85rem;cursor:pointer}
+.chip2.on{background:var(--act);border-color:transparent;color:#fff;font-weight:600}
+.oknote{background:rgba(56,224,160,.1);border-color:rgba(40,160,110,.5)}
 @media (max-width:375px){.bar .tag{letter-spacing:.2px;font-size:.5rem}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media print{nav,header,.back,.noprint{display:none}body{background:#fff;color:#000}.card{border:1px solid #999;background:none}}
@@ -123,8 +128,8 @@ details.help p{margin:8px 0 2px;line-height:1.5}
 <div id="ov" hidden role="dialog" aria-modal="true"></div>
 <script>
 /* Release info: bump VERSION per release and BUILD per published build (Build Directive) */
-const VERSION="1.3.2",BUILD="2026.11.18-2";
-const CHANGES=[["1.3.2","Report a problem email now uses the subject \"Cleaners\""],["1.3.1","Report a problem now opens a pre-filled email to VYBEON_ORG@proton.me instead of GitHub"],["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
+const VERSION="1.4.0",BUILD="2026.11.18-3";
+const CHANGES=[["1.4.0","Report a problem now sends straight to the VYBEON team from inside the app (no mail app needed), with a problem type and a Copy report text fallback"],["1.3.2","Report a problem email now uses the subject \"Cleaners\""],["1.3.1","Report a problem now sends an email to the VYBEON team instead of a GitHub issue"],["1.3.0","Costs and savings: what each recipe costs to make next to the store-bought product, a running savings total, and prices on the ingredient list. Make it yourself header, Home Screen banner, print button at the bottom of each recipe"],["1.2.0","New icons and title bar, Settings with 8 color themes, safety warning to accept on first open, What can I make? sorted by category, ammonia with its own warning, Report a problem, liquid glass tab bar"],["1.1.1","Recipes open by category; the all-recipes list is gone, and the never-mix banner is back"],["1.1.0","269 recipes: the 250 from the VYBEON Clean book merged with the library (24 duplicates combined, 1 left out), VYBEON look, About and Help"],["1.0.0","First release: 44 recipes, safety tab, What can I make?"]];
 const GERM={disinfects:["DISINFECT","Kills most germs when made and used exactly as written: a public-health bleach dilution with its full wet contact time, on a surface you cleaned first."],
  sanitizes:["SANITIZE","Reduces germs to safe levels using a published public-health method (bleach dilution, boiling, or a hot wash and dry)."],
  cleans:["CLEANS ONLY","Removes dirt, grease and odor. It makes no germ-kill claim. When someone is sick, follow with a recipe marked Sanitize or Disinfect."],
@@ -162,7 +167,7 @@ const HELP=[["search","Finding a recipe","Pick a category (Kitchen, Bathroom, Gl
  ["safety","Safety","The first time you open the app you'll be asked to read the Safety page and accept it. Never mix bleach with anything but water. Use one product at a time and rinse between products. The Safety tab has the never-mix chart, bleach dilutions and emergency numbers."],
  ["saved","Saving and printing","Tap ♡ on a recipe to keep it in Saved. Use Print label to print the recipe for the bottle."],
  ["settings","Settings and color themes","Tap the gear at the top right. Pick one of 8 color themes: VYBEON or the 7 VYBEON ONE swatches. Icons switch to glow tiles on dark themes and light chips on light themes. Settings also has Report a problem and About."],
- ["nevermix","Reporting a problem","Use Report a problem in Settings, or the link at the bottom of any recipe. It opens a pre-filled email to VYBEON_ORG@proton.me from your mail app. Don't include personal details."],
+ ["nevermix","Reporting a problem","Use Report a problem in Settings, or the button at the bottom of any recipe. Pick a problem type, describe it, and tap Send: it goes straight to the VYBEON team from inside the app, with no mail app or account needed. If sending fails, tap Copy report text and paste it to us. Don't include personal details."],
  ["install","Install and offline","Add it to your Home Screen to open it like an app: in Safari tap Share, then Add to Home Screen; in Chrome tap ⋮, then Install app. After your first visit it works without a signal."],
  ["about","Costs and savings","Each recipe shows about what it costs to make and what the store-bought product it replaces costs for the same amount. Tap “I made this” to add the difference to the savings card on the Recipes page. Prices are typical US prices and only estimates. Reset savings is in Settings."],
  ["print","Printing a recipe","Open a recipe and tap Print this recipe at the bottom. Tape it to the bottle, or keep it with your supplies."],
@@ -170,13 +175,35 @@ const HELP=[["search","Finding a recipe","Pick a category (Kitchen, Bathroom, Gl
 const KEY="diy-cleaning-v1";let S={saved:[],have:[],theme:"vybeon",accepted:null,made:{n:0,saved:0},noBanner:false};try{Object.assign(S,JSON.parse(localStorage.getItem(KEY))||{})}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 let D=null,tab="recipes",cat=null,q="",open=null,limit=60,pc=null,gate=S.accepted?null:"popup";
+let reportCtx=null,reportType="",reportFrom="#recipes";
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pad=n=>String(n).padStart(3,"0"),catOf=id=>D.categories.find(c=>c.id===id);
 const ic=(k,r)=>`<svg class="ic" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect class="t1" x="1" y="1" width="30" height="30" rx="${r?15:9}"/><rect class="t2" x="2.7" y="2.7" width="26.6" height="26.6" rx="${r?13.3:7.5}"/><g class="gl" transform="translate(6.4 6.4) scale(.8)">${IC[k]||""}</g></svg>`;
 const hydrate=(root=document)=>root.querySelectorAll("[data-ic]").forEach(e=>e.innerHTML=ic(e.dataset.ic,e.dataset.r));
 const REPO="https://github.com/MichaelGaylan/DIY-cleaners";
-const REPORT_EMAIL="VYBEON_ORG@proton.me";
-const report=r=>`mailto:${REPORT_EMAIL}?subject=${encodeURIComponent("Cleaners")}&body=${encodeURIComponent(`What went wrong:\n\n\nWhat I expected:\n\n\n---\nApp version ${VERSION} (build ${BUILD})${r?`\nRecipe: #${pad(r.no)} ${r.name}`:""}\nScreen: ${location.hash||"#recipes"}`)}`;
+/* Report a problem -> Web3Forms. The access key is public by design and only lets a
+   form post to the inbox it is registered to; the inbox address is never in the app or repo. */
+const W3F="47f5b569-9766-4142-bfa9-8a910dddd4a3";
+const RTYPES=["Recipe is wrong or unsafe","Something isn't working","Hard to use or confusing","Suggestion","Other"];
+function copyText(t){try{navigator.clipboard.writeText(t)}catch(e){}try{const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.left="-9999px";document.body.appendChild(a);a.focus();a.select();document.execCommand("copy");a.remove()}catch(e){}}
+function reportCtxLine(){const r=reportCtx&&D.recipes.find(x=>x.no===reportCtx);return r?`Recipe #${pad(r.no)} ${r.name}`:`Screen ${reportFrom||"#recipes"}`}
+function buildReport(){const el=$("#rmsg"),msg=(el&&el.value||"").trim();if(!msg){reportStatus("warn","Please describe the problem first.");el&&el.focus();return null}
+  const type=reportType||"Other",ctx=reportCtxLine();
+  return {title:`${type} · ${ctx}`,body:`${msg}\n\n---\nApp ${VERSION} (build ${BUILD})\n${ctx}`}}
+function reportStatus(kind,msg){const e=$("#rstatus");if(!e)return;e.style.display="block";e.className="note small"+(kind==="warn"?" danger":kind==="ok"?" oknote":"");e.textContent=msg}
+function reportView(){const r=reportCtx&&D.recipes.find(x=>x.no===reportCtx);
+  return `<button class="back" data-report-back>‹ Back</button><h2 style="margin:2px 0 6px">Report a problem</h2>
+  <p class="small muted">This goes straight to the VYBEON team. Please don't include personal details like your name, address or email.</p>
+  ${r?`<div class="card small">About: <b>#${pad(r.no)} ${esc(r.name)}</b></div>`:""}
+  <div class="k" style="font-size:.7rem;font-weight:800;letter-spacing:1.2px;color:var(--muted);margin:12px 0 6px">WHAT KIND OF PROBLEM?</div>
+  <div class="chips2">${RTYPES.map(t=>`<button class="chip2${reportType===t?" on":""}" data-rtype="${esc(t)}">${esc(t)}</button>`).join("")}</div>
+  <label class="k" for="rmsg" style="display:block;font-size:.7rem;font-weight:800;letter-spacing:1.2px;color:var(--muted);margin:14px 0 6px">WHAT HAPPENED?</label>
+  <textarea id="rmsg" class="search" rows="5" style="resize:vertical" placeholder="Tell us what went wrong, and what you expected."></textarea>
+  <input type="text" id="rbot" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <div id="rstatus" class="note small" style="display:none"></div>
+  <div class="printbar"><button class="btn primary wide" data-rsend>Send report</button>
+  <button class="btn wide" data-rcopy>Copy report text</button></div>
+  <p class="small muted">If sending doesn't work on your connection, tap Copy report text and paste it into an email to us.</p>`}
 function applyTheme(){const t=THEMES.find(x=>x.id===S.theme)||THEMES[0],el=document.documentElement;
   Object.entries(t.v).forEach(([k,v])=>el.style.setProperty("--"+k,v));el.dataset.mode=t.mode;document.querySelector('meta[name="theme-color"]').content=t.v.bg}
 const badge=r=>`<span class="badge g-${r.germ}">${GERM[r.germ][0]}</span>`;
@@ -230,7 +257,7 @@ function detail(r){
   <div class="noprint" style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn" data-tab="safety"><span class="bi">${ic("nevermix")}</span>Never-mix chart</button></div>
   <p class="small muted">${r.src==="book"?"From VYBEON Clean: 250 DIY Household Cleaning Recipes.":"From the DIY Cleaners recipe library."} Test a hidden spot first and label every container with contents and date.</p>
   <div class="printbar noprint"><button class="btn primary wide" onclick="window.print()"><span class="bi">${ic("print")}</span>Print this recipe</button>
-  <a class="small" style="text-align:center" href="${report(r)}">Report a problem with this recipe</a></div>`;
+  <button class="btn wide noprint" data-report="${r.no}"><span class="bi">${ic("nevermix")}</span>Report a problem with this recipe</button></div>`;
 }
 function pantry(){
   const have=new Set(S.have),ok=D.recipes.filter(r=>r.needs.length&&r.needs.every(n=>have.has(n))),near=D.recipes.filter(r=>!ok.includes(r)&&r.needs.filter(n=>!have.has(n)).length===1);
@@ -272,7 +299,7 @@ function settings(){return `<h2 style="margin-top:6px">Settings</h2>
   <div class="themes" id="themes"><div class="bub"></div>${THEMES.map(t=>`<button class="th${t.id===S.theme?" on":""}" data-theme="${t.id}"><span class="sw">${t.sw.map(c=>`<i style="background:${c}"></i>`).join("")}</span><b>${t.name}</b><span class="muted small" style="margin-top:-4px">${t.mode==="dark"?"Dark":"Light"}</span></button>`).join("")}</div>
   <h2 style="font-size:.9rem;margin-top:18px" class="muted">MORE</h2>
   ${row("help","Help","How each part of the app works",'data-tab="help"')}
-  ${row("nevermix","Report a problem","Opens a pre-filled email to VYBEON",`href="${report()}"`)}
+  ${row("nevermix","Report a problem","Sends it straight to the VYBEON team",'data-report=""')}
   ${row("safety","Safety warnings","Read the never-mix chart again",'data-tab="safety"')}
   ${row("about","About",`Version ${VERSION}, recipe sources and what's new`,'data-tab="about"')}
   ${savingsCard()}<button class="btn wide" style="justify-content:center" data-reset>${resetArm?"Tap again to reset savings to $0.00":"Reset savings"}</button>
@@ -326,7 +353,7 @@ function drop(el,e){if(RM.matches||!el.animate)return;const r=el.getBoundingClie
   d.animate([{transform:"translate(-50%,-50%) scale(0)",opacity:.9},{transform:"translate(-50%,-50%) scale(1)",opacity:0}],{duration:420,easing:"ease-out"}).onfinish=()=>d.remove()}
 function draw(){
   if(!D)return;const r=open&&D.recipes.find(x=>x.no===open);
-  $("#app").innerHTML=r?detail(r):tab==="pantry"?pantry():tab==="safety"?safety():tab==="saved"?saved():tab==="settings"?settings():tab==="help"?help():tab==="about"?about():list();
+  $("#app").innerHTML=r?detail(r):tab==="pantry"?pantry():tab==="safety"?safety():tab==="saved"?saved():tab==="settings"?settings():tab==="help"?help():tab==="about"?about():tab==="report"?reportView():list();
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",!open&&b.dataset.tab===tab));
   const qi=$("#q");if(qi)qi.oninput=e=>{q=e.target.value;limit=60;$("#list").innerHTML=listHTML()};
   document.querySelectorAll("details.help").forEach(d=>d.addEventListener("toggle",()=>{if(d.open)document.querySelectorAll("details.help").forEach(o=>{if(o!==d)o.open=false})}));
@@ -334,12 +361,23 @@ function draw(){
 }
 function go(hash){history.pushState({},"",hash);fromHash();scrollTo(0,0)}
 document.addEventListener("click",e=>{
-  const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-pc],[data-back],[data-fav],[data-more],[data-theme],[data-gate-ok],[data-gate-again],[data-accept],[data-decline],[data-amm],[data-made],[data-nobanner],[data-showbanner],[data-install],[data-reset]");if(!k)return;const d=k.dataset;
+  const k=e.target.closest("[data-open],[data-tab],[data-cat],[data-pc],[data-back],[data-fav],[data-more],[data-theme],[data-gate-ok],[data-gate-again],[data-accept],[data-decline],[data-amm],[data-made],[data-nobanner],[data-showbanner],[data-install],[data-reset],[data-report],[data-report-back],[data-rtype],[data-rsend],[data-rcopy]");if(!k)return;const d=k.dataset;
   if(d.gateOk!==undefined){gate="safety";go("#safety");return}
   if(d.gateAgain!==undefined){gate="popup";overlay();return}
   if(d.accept!==undefined){S.accepted=new Date().toISOString();save();gate=null;go("#recipes");return}
   if(d.decline!==undefined){gate="declined";overlay();return}
   if(d.amm){amm=false;if(d.amm==="yes"){S.have=[...new Set([...S.have,"ammonia"])];save();draw()}else overlay();return}
+  if(d.report!==undefined){reportCtx=d.report?+d.report:null;reportType="";reportFrom=location.hash||"#recipes";go("#report");return}
+  if(d.reportBack!==undefined){go(reportCtx?("#"+pad(reportCtx)):"#settings");return}
+  if(d.rtype!==undefined){reportType=d.rtype;const keep=$("#rmsg")?$("#rmsg").value:"";draw();if($("#rmsg")){$("#rmsg").value=keep;$("#rmsg").focus()}return}
+  if(d.rcopy!==undefined){const x=buildReport();if(!x)return;copyText("Cleaners — "+x.title+"\n\n"+x.body);reportStatus("ok","Report text copied. Paste it into an email to us.");return}
+  if(d.rsend!==undefined){if($("#rbot")&&$("#rbot").value)return;const x=buildReport();if(!x)return;
+    k.disabled=true;k.textContent="Sending…";reportStatus("","Sending…");
+    fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+      body:JSON.stringify({access_key:W3F,subject:"Cleaners — "+x.title,from_name:"DIY Cleaners",botcheck:"",message:x.title+"\n\n"+x.body})})
+      .then(r=>r.json()).then(j=>{if(j&&j.success){reportStatus("ok","✓ Report sent. Thank you.");const el=$("#rmsg");if(el)el.value="";reportType="";}else throw 0})
+      .catch(()=>{copyText("Cleaners — "+x.title+"\n\n"+x.body);reportStatus("warn","Couldn't send it just now. The report was copied to your clipboard — please paste it into an email to us.")})
+      .finally(()=>{if(k){k.disabled=false;k.textContent="Send report"}});return}
   if(gate&&!d.open&&d.tab!=="safety"&&d.back===undefined)return;
   if(d.open){go("#"+pad(d.open));return}
   if(d.tab){e.preventDefault();if(d.tab==="recipes"&&tab==="recipes"&&!open){cat=null;q=""}if(d.tab==="pantry")pc=null;go("#"+d.tab);return}
@@ -360,7 +398,7 @@ document.addEventListener("change",e=>{const h=e.target.dataset.have;if(!h)retur
   if(h==="ammonia"&&e.target.checked){e.target.checked=false;amm=true;overlay();return}
   S.have=e.target.checked?[...new Set([...S.have,h])]:S.have.filter(x=>x!==h);save();draw()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&amm){amm=false;overlay()}});
-const TABS=["recipes","pantry","safety","saved","settings","help","about"];
+const TABS=["recipes","pantry","safety","saved","settings","help","about","report"];
 function fromHash(){let h=location.hash.slice(1);if(h==="menu")h="settings";
   if(gate==="safety"&&h!=="safety"){history.replaceState({},"","#safety");h="safety"}
   if(/^\d{3}$/.test(h)){open=+h}else{open=null;if(TABS.includes(h))tab=h;else if(!h)tab="recipes"}draw()}

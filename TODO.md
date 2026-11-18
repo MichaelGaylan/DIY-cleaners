@@ -1,6 +1,7 @@
 # DIY Cleaners — Build list
 
 ## 🔴 Needs you
+- [ ] MAKE-028 · Create a Web3Forms access key for DIY Cleaners so reports have their own key (now it reuses VYBEON Make's key). Steps: 1) go to web3forms.com, 2) enter the DIY Cleaners report inbox address (the VYBEON inbox), 3) check that inbox and click the Web3Forms confirmation link, 4) copy the Access Key it shows, 5) send me just that key here and I'll swap it in. The key is public by design; don't send the inbox address. · Build · S · added 2026-11-18
 
 ## 🔵 Build list
 (empty)
@@ -8,11 +9,14 @@
 ## 🟡 Hold
 
 ## 🟣 Done
+### 1.4.0 · build 2026.11.18-3
+- [x] MAKE-027 · Report a problem sends in-app via Web3Forms straight to the VYBEON inbox (success:true before "Sent", Copy report text + clipboard fallback, subject prefix "Cleaners —", problem type kept after it); inbox address removed from the app and repo · Feature · M · added 2026-11-18
+
 ### 1.3.2 · build 2026.11.18-2
 - [x] MAKE-026 · Report email subject line is exactly "Cleaners" · UI · S · added 2026-11-18
 
 ### 1.3.1 · build 2026.11.18-1
-- [x] MAKE-025 · "Report a problem" sends a pre-filled email to VYBEON_ORG@proton.me (mailto) instead of a GitHub issue · UI · S · added 2026-11-18
+- [x] MAKE-025 · "Report a problem" sends a pre-filled email to the VYBEON team (mailto) instead of a GitHub issue · UI · S · added 2026-11-18
 
 ### 1.3.0 · build 2026.11.17-4
 - [x] MAKE-018 · "Put DIY Cleaners on your Home Screen" banner (DIY Cleaners name and app icon, not VYBEON Make): no app store needed; iPhone: Share, then Add to Home Screen; Android: ⋮, then Install app; dismissible with ✕, hidden once installed (reference: design/home-screen-banner-reference.png) · UI · S · added 2026-11-17
@@ -52,4 +56,4 @@
 - MAKE-002 · Recipe library built into VYBEON-make v1.4.0 · UI — wrong repo, overwrote an existing app; reverted (commit df9fb8b)
 
 ---
-Next free ID: MAKE-027
+Next free ID: MAKE-029
